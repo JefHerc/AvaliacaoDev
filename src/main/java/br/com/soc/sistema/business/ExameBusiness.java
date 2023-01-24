@@ -67,4 +67,8 @@ public class ExameBusiness {
 		Integer cod = Integer.parseInt(codigo);
 		dao.deleteExame(cod);
 	}
+
+	public void alterarExame(ExameVo exameVo) {
+		dao.editarExame(exameVo);		
+	}
 }

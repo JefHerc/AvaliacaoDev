@@ -43,10 +43,15 @@ public class ExameAction extends Action {
 	public String editar() {
 		if(exameVo.getRowid() == null)
 			return REDIRECT;
-		
+
 		exameVo = business.buscarExamePor(exameVo.getRowid());
 		
 		return INPUT;
+	}
+	
+	public String alterar() {
+		business.alterarExame(exameVo);
+		return REDIRECT;
 	}
 	
 	public String deletar() {
@@ -54,11 +59,6 @@ public class ExameAction extends Action {
 		return REDIRECT;
 	}
 
-	
-	
-	
-	
-	
 	public List<OpcoesComboBuscarExames> getListaOpcoesCombo(){
 		return Arrays.asList(OpcoesComboBuscarExames.values());
 	}

@@ -1,12 +1,13 @@
 package br.com.soc.sistema.vo;
 
-public class ExameVo {
+public class FuncionarioVo {
 	private String rowid;
 	private String nome;
 
-	public ExameVo() {}
+	public FuncionarioVo() {}
 
-	public ExameVo(String rowid, String nome) {
+	public FuncionarioVo(String rowid, String nome) {
+		super();
 		this.rowid = rowid;
 		this.nome = nome;
 	}
@@ -29,6 +30,6 @@ public class ExameVo {
 
 	@Override
 	public String toString() {
-		return "ExameVo [rowid=" + rowid + ", nome=" + nome + "]";
+		return "FuncionarioVo [rowid=" + rowid + ", nome=" + nome + "]";
 	}
 }

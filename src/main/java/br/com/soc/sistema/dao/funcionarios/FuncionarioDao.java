@@ -1,4 +1,4 @@
-package br.com.soc.sistema.dao.exames;
+package br.com.soc.sistema.dao.funcionarios;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,38 +9,38 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.soc.sistema.dao.Dao;
-import br.com.soc.sistema.vo.ExameVo;
+import br.com.soc.sistema.vo.FuncionarioVo;
 
-public class ExameDao extends Dao {
+public class FuncionarioDao extends Dao{
 
-	public void insertExame(ExameVo exameVo) {
-		StringBuilder query = new StringBuilder("INSERT INTO exame (nm_exame) values (?)");
+	public void insertFuncionario(FuncionarioVo funcionarioVo) {
+		StringBuilder query = new StringBuilder("INSERT INTO funcionario (nm_funcionario) values (?)");
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
 			int i = 1;
-			ps.setString(i++, exameVo.getNome());
+			ps.setString(i++, funcionarioVo.getNome());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public List<ExameVo> findAllExames() {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame");
+	public List<FuncionarioVo> findAllFuncionarios() {
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario");
 		try (Connection con = getConexao();
 				PreparedStatement ps = con.prepareStatement(query.toString());
 				ResultSet rs = ps.executeQuery()) {
 
-			ExameVo vo = null;
-			List<ExameVo> exames = new ArrayList<>();
+			FuncionarioVo vo = null;
+			List<FuncionarioVo> funcionarios = new ArrayList<>();
 			while (rs.next()) {
-				vo = new ExameVo();
+				vo = new FuncionarioVo();
 				vo.setRowid(rs.getString("id"));
 				vo.setNome(rs.getString("nome"));
 
-				exames.add(vo);
+				funcionarios.add(vo);
 			}
-			return exames;
+			return funcionarios;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -48,9 +48,9 @@ public class ExameDao extends Dao {
 		return Collections.emptyList();
 	}
 
-	public List<ExameVo> findAllByNome(String nome) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ")
-				.append("WHERE lower(nm_exame) like lower(?)");
+	public List<FuncionarioVo> findAllByNome(String nome) {
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario ")
+				.append("WHERE lower(nm_funcionario) like lower(?)");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			int i = 1;
@@ -58,17 +58,17 @@ public class ExameDao extends Dao {
 			ps.setString(i, "%" + nome + "%");
 
 			try (ResultSet rs = ps.executeQuery()) {
-				ExameVo vo = null;
-				List<ExameVo> exames = new ArrayList<>();
+				FuncionarioVo vo = null;
+				List<FuncionarioVo> funcionarios = new ArrayList<>();
 
 				while (rs.next()) {
-					vo = new ExameVo();
+					vo = new FuncionarioVo();
 					vo.setRowid(rs.getString("id"));
 					vo.setNome(rs.getString("nome"));
 
-					exames.add(vo);
+					funcionarios.add(vo);
 				}
-				return exames;
+				return funcionarios;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -76,8 +76,8 @@ public class ExameDao extends Dao {
 		return Collections.emptyList();
 	}
 
-	public ExameVo findByCodigo(Integer codigo) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ").append("WHERE rowid = ?");
+	public FuncionarioVo findByCodigo(Integer codigo) {
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario ").append("WHERE rowid = ?");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			int i = 1;
@@ -85,10 +85,10 @@ public class ExameDao extends Dao {
 			ps.setInt(i, codigo);
 
 			try (ResultSet rs = ps.executeQuery()) {
-				ExameVo vo = null;
+				FuncionarioVo vo = null;
 
 				while (rs.next()) {
-					vo = new ExameVo();
+					vo = new FuncionarioVo();
 					vo.setRowid(rs.getString("id"));
 					vo.setNome(rs.getString("nome"));
 				}
@@ -100,8 +100,8 @@ public class ExameDao extends Dao {
 		return null;
 	}
 
-	public void deleteExame(Integer codigo) {
-		StringBuilder query = new StringBuilder("DELETE FROM exame WHERE rowid = ?");
+	public void deleteFuncionario(Integer codigo) {
+		StringBuilder query = new StringBuilder("DELETE FROM funcionario WHERE rowid = ?");
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			
 			int i = 1;
@@ -114,12 +114,12 @@ public class ExameDao extends Dao {
 		}
 
 	}
-	public void editarExame(ExameVo exameVo) {
-		StringBuilder query = new StringBuilder("UPDATE exame SET nm_exame = ? WHERE rowid = ?");
+	public void editarFuncionario(FuncionarioVo funcionarioVo) {
+		StringBuilder query = new StringBuilder("UPDATE funcionario SET nm_funcionario = ? WHERE rowid = ?");
 		
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
-			int cod = Integer.parseInt(exameVo.getRowid());
-			ps.setString(1, exameVo.getNome());
+			int cod = Integer.parseInt(funcionarioVo.getRowid());
+			ps.setString(1, funcionarioVo.getNome());
 			ps.setInt(2, cod);
 			ps.executeUpdate();
 			

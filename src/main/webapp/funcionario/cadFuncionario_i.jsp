@@ -11,14 +11,14 @@
 
 		<div class="container">
 		
-			<s:form id="form-exame" action="#">
+			<s:form id="form-funcionario" action="#">
 
 				<div class="card mt-5">
 					<div class="card-header">
 						<div class="row">
 							<div class="col-sm-5">
-								<s:url action="todosExames" var="todos"/>
-								<a href="${todos}" class="btn btn-success" >Exames</a>
+								<s:url action="todosFuncionarios" var="todos"/>
+								<a href="${todos}" class="btn btn-success" >Funcionarios</a>
 							</div>
 							
 							<div class="col-sm">
@@ -34,7 +34,7 @@
 							</label>	
 
 							<div class="col-sm-2">
-								<s:textfield cssClass="form-control" id="id" name="exameVo.rowid" readonly="true"/>							
+								<s:textfield cssClass="form-control" id="id" name="funcionarioVo.rowid" readonly="true"/>							
 							</div>	
 						</div>
 						
@@ -44,7 +44,7 @@
 							</label>	
 
 							<div class="col-sm-5">
-								<s:textfield cssClass="form-control" id="nome" name="exameVo.nome"/>							
+								<s:textfield cssClass="form-control" id="nome" name="funcionarioVo.nome"/>							
 							</div>	
 						</div>
 					</div>
@@ -63,16 +63,15 @@
 		<script type="text/javascript" src="javaScript/jquery.js"></script>
 		<script type="text/javascript">
 			$(function(){
-				var exameRowid = "<s:property value ='exameVo.rowid' />";
-				if(exameRowid === "") {
-					console.log('exameRowid vazio')
-					$("#form-exame").attr("action", "/avaliacao/novoExames.action");
+				var funcionarioRowid = "<s:property value ='funcionarioVo.rowid' />";
+				if(funcionarioRowid === "") {
+					$("#form-funcionario").attr("action", "/avaliacao/novoFuncionarios.action");
 					$("title").text("<s:text name='label.titulo.pagina.cadastro' />");
-					$(".card-title").text("Novo Exame");
+					$(".card-title").text("Novo Funcionario");
 				} else {
-					$("#form-exame").attr('action', '/avaliacao/alterarExames.action');
+					$("#form-funcionario").attr('action', '/avaliacao/alterarFuncionarios.action');
 					$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
-					$(".card-title").text("Editar Exame");
+					$(".card-title").text("Editar Funcionario");
 				}
 			})
 		</script>
