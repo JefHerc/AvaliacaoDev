@@ -22,6 +22,11 @@
             <result name="input">/funcionario/cadFuncionario_i.jsp</result>
         	<result name="redirect" type="redirectAction">todosFuncionarios</result>
         </action>
+        <action name="*Agendamentos" class="br.com.soc.sistema.action.agendamento.AgendamentoAction" method="{1}">
+        	<result name="success">/agendamento/cadAgendamento_b.jsp</result>
+            <result name="input">/agendamento/cadAgendamento_i.jsp</result>
+        	<result name="redirect" type="redirectAction">todosAgendamentos</result>
+        </action>
         
     </package>
 

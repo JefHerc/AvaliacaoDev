@@ -8,6 +8,8 @@
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">	
+	<jsp:include page="../navbar.html" />
+
 		<div class="container">
 			<div class="row mt-5 mb-2">
 				<div class="col-sm p-0">
