@@ -1,12 +1,15 @@
 package br.com.soc.sistema.action.agendamento;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.soc.sistema.business.AgendamentoBusiness;
 import br.com.soc.sistema.business.ExameBusiness;
 import br.com.soc.sistema.business.FuncionarioBusiness;
+import br.com.soc.sistema.filter.AgendamentoFilter;
 import br.com.soc.sistema.infra.Action;
+import br.com.soc.sistema.infra.OpcoesComboBuscarAgendamentos;
 import br.com.soc.sistema.vo.AgendamentoVo;
 import br.com.soc.sistema.vo.ExameVo;
 import br.com.soc.sistema.vo.FuncionarioVo;
@@ -20,7 +23,8 @@ public class AgendamentoAction extends Action{
 	private List<FuncionarioVo> funcionarios = new ArrayList<>();
 	private List<ExameVo> exames = new ArrayList<>();
 	private AgendamentoVo agendamentoVo = new AgendamentoVo();
-	
+	private AgendamentoFilter filtrar = new AgendamentoFilter();
+
 	public String todos() {
 		agendamentos.addAll(business.trazerTodosOsAgendamentos());
 		return SUCCESS;
@@ -47,10 +51,38 @@ public class AgendamentoAction extends Action{
 		if(agendamentoVo.getRowid() == null)
 			return REDIRECT;
 
-		agendamentoVo = business.buscarAgendamentoPor(agendamentoVo.getRowid());
-		funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
-		exames.addAll(exameBusiness.trazerTodosOsExames());
-		return INPUT;
+			agendamentoVo = business.buscarAgendamentoPor(agendamentoVo.getRowid());
+			funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+			exames.addAll(exameBusiness.trazerTodosOsExames());
+			
+			return INPUT; 
+		}
+	
+	public String alterar() {
+		business.alterarAgendamento(agendamentoVo);
+		return REDIRECT;
+	}
+
+	public String filtrar() {
+		if(filtrar.isNullOpcoesCombo())
+			return REDIRECT;
+		
+		agendamentos = business.filtrarAgendamentos(filtrar);
+		
+		return SUCCESS;
+	}
+	
+	public List<OpcoesComboBuscarAgendamentos> getListaOpcoesCombo(){
+		return Arrays.asList(OpcoesComboBuscarAgendamentos.values());
+	}
+
+	
+	public AgendamentoFilter getFiltrar() {
+		return filtrar;
+	}
+
+	public void setFiltrar(AgendamentoFilter filtrar) {
+		this.filtrar = filtrar;
 	}
 
 	public AgendamentoBusiness getBusiness() {

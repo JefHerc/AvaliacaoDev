@@ -3,6 +3,7 @@ package br.com.soc.sistema.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.soc.sistema.dao.agendamentos.AgendamentoDao;
 import br.com.soc.sistema.dao.exames.ExameDao;
 import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.filter.ExameFilter;
@@ -12,9 +13,11 @@ public class ExameBusiness {
 
 	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
 	private ExameDao dao;
+	private AgendamentoDao daoAgendamento;
 
 	public ExameBusiness() {
 		this.dao = new ExameDao();
+		this.daoAgendamento = new AgendamentoDao();
 	}
 
 	public List<ExameVo> trazerTodosOsExames() {
@@ -65,6 +68,9 @@ public class ExameBusiness {
 
 	public void deletarExame(String codigo) {
 		Integer cod = Integer.parseInt(codigo);
+		boolean exameAgendado = daoAgendamento.isExamePossuiAgendamentos(cod);
+		
+		if(!exameAgendado)
 		dao.deleteExame(cod);
 	}
 
