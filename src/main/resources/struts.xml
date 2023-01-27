@@ -27,6 +27,10 @@
             <result name="input">/agendamento/cadAgendamento_i.jsp</result>
         	<result name="redirect" type="redirectAction">todosAgendamentos</result>
         </action>
+         <action name="*Relatorios" class="br.com.soc.sistema.action.agendamento.RelAgendamentoAction" method="{1}">
+        	<result name="success">/agendamento/cadRelAgendamento_b.jsp</result>
+        	<result name="redirect" type="redirectAction">direcinarRelatorios</result>
+        </action>
         
     </package>
 

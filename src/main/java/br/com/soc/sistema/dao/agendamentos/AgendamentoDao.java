@@ -245,4 +245,33 @@ public class AgendamentoDao extends Dao {
 
 		return isAgendado;
 	}
+
+	public List<AgendamentoVo> findAllByRangeData(LocalDate dataInicio, LocalDate dataFim) {
+		StringBuilder query = new StringBuilder();
+		query.append("SELECT age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
+		query.append("FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid JOIN exame exa ON age.cd_exame = exa.rowid ");
+		query.append("WHERE (data_agendamento >= ? AND data_agendamento <= ?);");
+		
+		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
+
+			ps.setObject(1, dataInicio);
+			ps.setObject(2, dataFim);
+			try (ResultSet rs = ps.executeQuery()) {
+				AgendamentoVo vo = null;
+				List<AgendamentoVo> agendamentos = new ArrayList<>();
+				while (rs.next()) {
+					vo = new AgendamentoVo();
+					vo.setFuncionario(new FuncionarioVo(rs.getString("cd_funcionario"), rs.getString("nm_funcionario")));
+					vo.setExame(new ExameVo(rs.getString("cd_exame"), rs.getString("nm_exame")));
+					vo.setDataAgendamento(rs.getObject("data_agendamento", LocalDate.class));
+
+					agendamentos.add(vo);
+				}
+				return agendamentos;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
+	}
 }

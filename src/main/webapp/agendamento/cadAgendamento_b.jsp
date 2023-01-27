@@ -77,7 +77,7 @@
 					
 					<tfoot class="table-secondary">
 						<tr>
-							<td colspan="3">
+							<td colspan="5">
 								<s:url action="novoAgendamentos" var="novo"/>
 								
 								<a href="${novo}" class="btn btn-success">
