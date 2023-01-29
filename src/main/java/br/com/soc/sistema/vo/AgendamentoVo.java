@@ -57,6 +57,7 @@ public class AgendamentoVo {
 		this.exame = exame;
 	}
 
+	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public LocalDate getDataAgendamento() {
 		return dataAgendamento;
 	}
@@ -71,11 +72,6 @@ public class AgendamentoVo {
         return formatador.format(getDataAgendamento());
     }
 	
-	 public String getdataFormatadaENG() {
-	    	DateTimeFormatter formatador = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	        return formatador.format(getDataAgendamento());
-	 }
-
 	@Override
 	public String toString() {
 		return "AgendamentoVo [rowid=" + rowid + ", funcionario=" + funcionario + ", exame=" + exame

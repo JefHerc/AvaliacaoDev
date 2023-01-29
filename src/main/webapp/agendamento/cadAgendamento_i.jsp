@@ -79,7 +79,7 @@
 							</label>	
 
 							<div class="col-sm-5">
-								<s:textfield type="date" cssClass="form-control" id="data-agendamento" name="agendamentoVo.dataAgendamento" value="%{agendamentoVo.dataFormatadaENG}"/>							
+								<s:textfield type="date" cssClass="form-control" id="data-agendamento" name="agendamentoVo.dataAgendamento" />							
 							</div>	
 						</div>
 					</div>

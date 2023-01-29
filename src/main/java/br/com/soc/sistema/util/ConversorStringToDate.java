@@ -19,7 +19,7 @@ public class ConversorStringToDate extends StrutsTypeConverter {
 	@Override
 	public String convertToString(Map arg0, Object date) {
 		LocalDate data = (LocalDate) date;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String dataFormatada = data.format(dtf);
 		return dataFormatada;
 	}

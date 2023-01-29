@@ -1,5 +1,6 @@
 package br.com.soc.sistema.action.agendamento;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,12 @@ public class RelAgendamentoAction extends Action {
 
 	public String gerar() {
 		agendamentos = business.gerarRelatoriEmTela(dataInicio, dataFim);
+		try {
+			business.gerarXls(dataInicio, dataFim);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return SUCCESS;
 	}
 
@@ -36,6 +43,7 @@ public class RelAgendamentoAction extends Action {
 		this.agendamentos = agendamentos;
 	}
 
+	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
@@ -45,6 +53,7 @@ public class RelAgendamentoAction extends Action {
 		this.dataInicio = dataInicio;
 	}
 
+	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public LocalDate getDataFim() {
 		return dataFim;
 	}

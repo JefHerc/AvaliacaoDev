@@ -1,5 +1,6 @@
 package br.com.soc.sistema.business;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class RelAgendamentoBusiness {
 		List<AgendamentoVo> agendamentos = dao.findAllByRangeData(dataInicio, dataFim);
 		return agendamentos;
 	}
-	
-	
+
+	public void gerarXls(LocalDate dataInicio, LocalDate dataFim) throws IOException {
+		List<AgendamentoVo> agendamentos = dao.findAllByRangeData(dataInicio, dataFim);
+		new RelAgendamentoXls().gerarXls(agendamentos);
+	}
+		
+
 }
