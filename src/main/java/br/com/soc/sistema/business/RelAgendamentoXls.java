@@ -1,6 +1,6 @@
 package br.com.soc.sistema.business;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +27,7 @@ public class RelAgendamentoXls {
 		workbook = new HSSFWorkbook();
 	}
 		
-	public void gerarXls(List<AgendamentoVo> agendamentos) throws IOException {
+	public HSSFWorkbook gerarXls(List<AgendamentoVo> agendamentos) throws IOException {
 		sheet = workbook.createSheet("Agendamentos");
 
 		sheet.createRow(0);
@@ -39,37 +39,37 @@ public class RelAgendamentoXls {
 
 		aplicarStyleRow(sheet.getRow(0), styleCelulaCabecalho());
 
-		int i = 1;
+		int linha = 1;
 		for (AgendamentoVo agendamento : agendamentos) {
-			sheet.createRow(i);
-			sheet.getRow(i).createCell(0).setCellValue(agendamento.getFuncionario().getRowid());
-			sheet.getRow(i).createCell(1).setCellValue(agendamento.getFuncionario().getNome());
-			sheet.getRow(i).createCell(2).setCellValue(agendamento.getExame().getRowid());
-			sheet.getRow(i).createCell(3).setCellValue(agendamento.getExame().getNome());
-			sheet.getRow(i).createCell(4).setCellValue(agendamento.getDataFormatada());
+			sheet.createRow(linha);
+			sheet.getRow(linha).createCell(0).setCellValue(agendamento.getFuncionario().getRowid());
+			sheet.getRow(linha).createCell(1).setCellValue(agendamento.getFuncionario().getNome());
+			sheet.getRow(linha).createCell(2).setCellValue(agendamento.getExame().getRowid());
+			sheet.getRow(linha).createCell(3).setCellValue(agendamento.getExame().getNome());
+			sheet.getRow(linha).createCell(4).setCellValue(agendamento.getDataFormatada());
 
-			if (i % 2 == 0) {
-				aplicarStyleRow(sheet.getRow(i), styleCelulaComCor());
+			if (linha % 2 == 0) {
+				aplicarStyleRow(sheet.getRow(linha), styleCelulaComCor());
 
 			} else {
-				aplicarStyleRow(sheet.getRow(i), styleCelulaSemCor());
+				aplicarStyleRow(sheet.getRow(linha), styleCelulaSemCor());
 			}
 
-			i++;
+			linha++;
 		}
 
-		sheet.autoSizeColumn(0);
-		sheet.autoSizeColumn(1);
-		sheet.autoSizeColumn(2);
-		sheet.autoSizeColumn(3);
-		sheet.autoSizeColumn(4);
+		setAutoSizeColumn();
 
-		File file = new File("C:\\Users\\jefer\\Music\\Teste.xls");
-
-		workbook.write(file);
-		workbook.close();
+    
+		return workbook;
 	}
 
+	private void setAutoSizeColumn() {
+	    for (int i = 0; i < sheet.getRow(0).getLastCellNum(); i++) {
+	        sheet.autoSizeColumn(i);
+	    }
+	}
+	
 	private HSSFCellStyle styleCelulaCabecalho() {
 		HSSFCellStyle style = workbook.createCellStyle();
 		HSSFFont font = workbook.createFont();

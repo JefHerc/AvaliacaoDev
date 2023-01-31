@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import br.com.soc.sistema.dao.agendamentos.AgendamentoDao;
 import br.com.soc.sistema.vo.AgendamentoVo;
 
@@ -21,9 +23,10 @@ public class RelAgendamentoBusiness {
 		return agendamentos;
 	}
 
-	public void gerarXls(LocalDate dataInicio, LocalDate dataFim) throws IOException {
+	public HSSFWorkbook gerarXls(LocalDate dataInicio, LocalDate dataFim) throws IOException {
 		List<AgendamentoVo> agendamentos = dao.findAllByRangeData(dataInicio, dataFim);
-		new RelAgendamentoXls().gerarXls(agendamentos);
+		HSSFWorkbook workbook = new RelAgendamentoXls().gerarXls(agendamentos);
+		return workbook;
 	}
 		
 

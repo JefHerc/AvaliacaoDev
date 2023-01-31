@@ -1,9 +1,14 @@
 package br.com.soc.sistema.action.agendamento;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.opensymphony.xwork2.conversion.annotations.Conversion;
 import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
@@ -19,6 +24,7 @@ public class RelAgendamentoAction extends Action {
 	private List<AgendamentoVo> agendamentos = new ArrayList<>();
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
+	private InputStream fileInputStream;
 
 	public String direcionar() {
 		return SUCCESS;
@@ -27,12 +33,20 @@ public class RelAgendamentoAction extends Action {
 	public String gerar() {
 		agendamentos = business.gerarRelatoriEmTela(dataInicio, dataFim);
 		try {
-			business.gerarXls(dataInicio, dataFim);
+			HSSFWorkbook workbook = business.gerarXls(dataInicio, dataFim);
+	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+	        try {
+	            workbook.write(outputStream);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        fileInputStream = new ByteArrayInputStream(outputStream.toByteArray());
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return SUCCESS;
+		return "gerar";
 	}
 
 	public List<AgendamentoVo> getAgendamentos() {
@@ -62,4 +76,9 @@ public class RelAgendamentoAction extends Action {
 	public void setDataFim(LocalDate dataFim) {
 		this.dataFim = dataFim;
 	}
+
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+
 }
