@@ -7,64 +7,35 @@
 
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.ui.theme" value="simple" />
-	<constant name="struts.enable.DynamicMethodInvocation"
-		value="false" />
-	<constant name="struts.custom.i18n.resources"
-		value="ApplicationResources" />
-	<constant name="struts.action.excludePattern"
-		value="/webjars/.*,/h2-console/*" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<constant name="struts.action.excludePattern" value="/webjars/.*,/h2-console/*" />
 
-	<package name="br.com.soc.sistema" extends="struts-default"
-		strict-method-invocation="false">
-		<interceptors>
-			<interceptor name="loginInterceptor"
-				class="br.com.soc.sistema.infra.LoginInterceptor" />
-			<interceptor-stack name="loginInterceptorStack">
-				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="loginInterceptor" />
-			</interceptor-stack>
-		</interceptors>
-
-        <global-results>
-            <result name="loginError">/login/cadLogin.jsp</result>
-        </global-results>
-
-		<action name="*Exames"
-			class="br.com.soc.sistema.action.exame.ExameAction" method="{1}">
-			<interceptor-ref name="loginInterceptor" />
+	<package name="br.com.soc.sistema" extends="struts-default" strict-method-invocation="false">
+		<action name="*Exames" class="br.com.soc.sistema.action.exame.ExameAction" method="{1}">
 			<result name="success">/exame/cadExame_b.jsp</result>
 			<result name="input">/exame/cadExame_i.jsp</result>
 			<result name="redirect" type="redirectAction">todosExames</result>
 		</action>
-		<action name="*Funcionarios"
-			class="br.com.soc.sistema.action.funcionario.FuncionarioAction"
-			method="{1}">
-			<interceptor-ref name="loginInterceptor" />
+		<action name="*Funcionarios" class="br.com.soc.sistema.action.funcionario.FuncionarioAction" method="{1}">
 			<result name="success">/funcionario/cadFuncionario_b.jsp</result>
 			<result name="input">/funcionario/cadFuncionario_i.jsp</result>
 			<result name="redirect" type="redirectAction">todosFuncionarios</result>
 		</action>
-		<action name="*Agendamentos"
-			class="br.com.soc.sistema.action.agendamento.AgendamentoAction"
-			method="{1}">
-			<interceptor-ref name="loginInterceptor" />
+		<action name="*Agendamentos" class="br.com.soc.sistema.action.agendamento.AgendamentoAction" method="{1}">
 			<result name="success">/agendamento/cadAgendamento_b.jsp</result>
 			<result name="input">/agendamento/cadAgendamento_i.jsp</result>
 			<result name="redirect" type="redirectAction">todosAgendamentos</result>
 		</action>
-		<action name="*Relatorios"
-			class="br.com.soc.sistema.action.agendamento.RelAgendamentoAction"
-			method="{1}">
-			<interceptor-ref name="loginInterceptor" />
+		<action name="*Relatorios" class="br.com.soc.sistema.action.agendamento.RelAgendamentoAction" method="{1}">
 			<result name="success">/agendamento/cadRelAgendamento_b.jsp</result>
 			<result name="redirect" type="redirectAction">direcinarRelatorios</result>
-			<result name="gerar" type="stream">
+			<result name="downloadXls" type="stream">
 				<param name="contentType">application/vnd.ms-excel</param>
 				<param name="inputName">fileInputStream</param>
 				<param name="contentDisposition">attachment;filename="Agendamentos.xls"</param>
 				<param name="bufferSize">1024</param>
 			</result>
-			
 		</action>
 		<action name="*Aplicacao"
 			class="br.com.soc.sistema.action.login.LoginAction" method="{1}">

@@ -30,23 +30,27 @@ public class RelAgendamentoAction extends Action {
 		return SUCCESS;
 	}
 
-	public String gerar() {
-		agendamentos = business.gerarRelatoriEmTela(dataInicio, dataFim);
+	public String xls() {
 		try {
 			HSSFWorkbook workbook = business.gerarXls(dataInicio, dataFim);
-	        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	        try {
-	            workbook.write(outputStream);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        fileInputStream = new ByteArrayInputStream(outputStream.toByteArray());
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			try {
+				workbook.write(outputStream);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			fileInputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "gerar";
+		return "downloadXls";
+	}
+
+	public String indicador() {
+		agendamentos = business.gerarRelatoriEmTela(dataInicio, dataFim);
+		return "redirect";
 	}
 
 	public List<AgendamentoVo> getAgendamentos() {
@@ -57,26 +61,26 @@ public class RelAgendamentoAction extends Action {
 		this.agendamentos = agendamentos;
 	}
 
-	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
+	@TypeConversion(converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public LocalDate getDataInicio() {
 		return dataInicio;
 	}
-	
-	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
+
+	@TypeConversion(converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public void setDataInicio(LocalDate dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
+	@TypeConversion(converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public LocalDate getDataFim() {
 		return dataFim;
 	}
-	
-	@TypeConversion (converter = "br.com.soc.sistema.util.ConversorStringToDate")
+
+	@TypeConversion(converter = "br.com.soc.sistema.util.ConversorStringToDate")
 	public void setDataFim(LocalDate dataFim) {
 		this.dataFim = dataFim;
 	}
-
+		
 	public InputStream getFileInputStream() {
 		return fileInputStream;
 	}

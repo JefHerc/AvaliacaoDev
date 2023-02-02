@@ -12,6 +12,7 @@ import br.com.soc.sistema.vo.ExameVo;
 public class ExameBusiness {
 
 	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
+	private static final String NOME_NAO_PODE_SER_EM_BRANCO = "Nome não pode ser em branco";
 	private ExameDao dao;
 	private AgendamentoDao daoAgendamento;
 
@@ -27,11 +28,11 @@ public class ExameBusiness {
 	public void salvarExame(ExameVo exameVo) {
 		try {
 			if (exameVo.getNome().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
+				throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
 
 			dao.insertExame(exameVo);
 		} catch (Exception e) {
-			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
+			throw new BusinessException("Não foi possível salvar o exame");
 		}
 
 	}
@@ -68,13 +69,31 @@ public class ExameBusiness {
 
 	public void deletarExame(String codigo) {
 		Integer cod = Integer.parseInt(codigo);
-		boolean exameAgendado = daoAgendamento.isExamePossuiAgendamentos(cod);
-		
-		if(!exameAgendado)
-		dao.deleteExame(cod);
+		isExameAgendado(cod);
+
+		try {
+			dao.deleteExame(cod);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("Falha ao deletar exame");
+		}
 	}
 
 	public void alterarExame(ExameVo exameVo) {
-		dao.editarExame(exameVo);		
+		if(exameVo.getNome().isEmpty() || exameVo.getNome() == "")
+			throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
+		
+		try {
+			dao.editarExame(exameVo);		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("Falha ao alterar exame");
+		}
+	}
+	
+	private void isExameAgendado(int cod) {
+		boolean exameAgendado = daoAgendamento.isExamePossuiAgendamentos(cod);
+		if(exameAgendado)
+			throw new BusinessException("Este exame não pode ser excluído pois está vinculado a um ou mais agendamentos");
 	}
 }

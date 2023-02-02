@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"  pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<jsp:include page="../mensagem.jsp" />
+
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="UTF-8">
 		<title><s:text name="label.titulo.pagina.consulta"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
@@ -28,7 +30,6 @@
 									listValueKey="%{descricao}"
 									value="filtrar.opcoesCombo.codigo"									
 								/>
-								
 								<s:textfield cssClass="form-control" id="nome" name="filtrar.valorBusca"/>
 								<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button>
 						</div>
@@ -121,7 +122,7 @@
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript" src="javaScript/jquery.js"></script>
 		<script type="text/javascript">
-		//FUNÇÃO PARA PEGAR O ID DO EXAME A SER EXCLUIDO E PASSAR PARA O MODAL
+		//FUNÃ‡ÃƒO PARA PEGAR O ID DO EXAME A SER EXCLUIDO E PASSAR PARA O MODAL
 		$('#confirmarExclusao').on('show.bs.modal', function (event) {
 				console.log("entrou")
 			  var button = $(event.relatedTarget) // Button that triggered the modal
@@ -129,6 +130,15 @@
 			  // Pass the dataId to the Struts action
 			  $('#excluir').attr("href", exameId);
 			});
+
+		$(function(){
+			exibirMensagem();
+		})
+		function exibirMensagem() {
+			var msg = mensagem;
+			if(msg != "")
+			alert(msg); }
+
 		</script>
 	</body>
 </html>

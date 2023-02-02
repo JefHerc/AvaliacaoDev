@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"  pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="UTF-8">
 		<title></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
@@ -19,7 +19,7 @@
 						<div class="row">
 							<div class="col-sm-5">
 								<s:url action="todosFuncionarios" var="todos"/>
-								<a href="${todos}" class="btn btn-success" >Funcionarios</a>
+								<a href="${todos}" class="btn btn-success" >Funcionários</a>
 							</div>
 							
 							<div class="col-sm">
@@ -31,7 +31,7 @@
 					<div class="card-body">
 						<div class="row align-items-center">
 							<label for="id" class="col-sm-1 col-form-label text-center">
-								C�digo:
+								Código:
 							</label>	
 
 							<div class="col-sm-2">
@@ -53,7 +53,7 @@
 					<div class="card-footer">
 						<div class="form-row">
 							<button class="btn btn-primary col-sm-4 offset-sm-1">Salvar</button>
-							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formulario</button>
+							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formulário</button>
 						</div>
 					</div>
 				</div>

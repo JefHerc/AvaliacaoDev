@@ -17,8 +17,7 @@ public class ExameDao extends Dao {
 		StringBuilder query = new StringBuilder("INSERT INTO exame (nm_exame) values (?)");
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
-			int i = 1;
-			ps.setString(i++, exameVo.getNome());
+			ps.setString(1, exameVo.getNome());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -53,11 +52,11 @@ public class ExameDao extends Dao {
 				.append("WHERE lower(nm_exame) like lower(?)");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
-			int i = 1;
 
-			ps.setString(i, "%" + nome + "%");
+			ps.setString(1, "%" + nome + "%");
 
 			try (ResultSet rs = ps.executeQuery()) {
+				
 				ExameVo vo = null;
 				List<ExameVo> exames = new ArrayList<>();
 
@@ -77,12 +76,12 @@ public class ExameDao extends Dao {
 	}
 
 	public ExameVo findByCodigo(Integer codigo) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ").append("WHERE rowid = ?");
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ")
+				.append("WHERE rowid = ?");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
-			int i = 1;
 
-			ps.setInt(i, codigo);
+			ps.setInt(1, codigo);
 
 			try (ResultSet rs = ps.executeQuery()) {
 				ExameVo vo = null;
@@ -103,26 +102,26 @@ public class ExameDao extends Dao {
 	public void deleteExame(Integer codigo) {
 		StringBuilder query = new StringBuilder("DELETE FROM exame WHERE rowid = ?");
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
-			
-			int i = 1;
-			
-			ps.setInt(i, codigo);
+
+			ps.setInt(1, codigo);
 			ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
+
 	public void editarExame(ExameVo exameVo) {
 		StringBuilder query = new StringBuilder("UPDATE exame SET nm_exame = ? WHERE rowid = ?");
-		
+
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
+			
 			int cod = Integer.parseInt(exameVo.getRowid());
 			ps.setString(1, exameVo.getNome());
 			ps.setInt(2, cod);
 			ps.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

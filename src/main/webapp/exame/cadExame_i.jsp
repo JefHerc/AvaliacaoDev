@@ -1,17 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"  pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="UTF-8">
 		<title></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">
 	<jsp:include page="../navbar.html" />
-
 		<div class="container">
-		
 			<s:form id="form-exame" action="#">
 
 				<div class="card mt-5">
@@ -31,7 +29,7 @@
 					<div class="card-body">
 						<div class="row align-items-center">
 							<label for="id" class="col-sm-1 col-form-label text-center">
-								C�digo:
+								Código:
 							</label>	
 
 							<div class="col-sm-2">
@@ -53,16 +51,16 @@
 					<div class="card-footer">
 						<div class="form-row">
 							<button class="btn btn-primary col-sm-4 offset-sm-1">Salvar</button>
-							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formulario</button>
+							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formulário</button>
 						</div>
 					</div>
 				</div>
 			</s:form>			
 		</div>
-		
+		 <label id="msg"><s:property value='mensagemErro'/></label>>
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript" src="javaScript/jquery.js"></script>
-		<script type="text/javascript">
+		<script type="text/javascript" charset="UTF-8">
 			$(function(){
 				var exameRowid = "<s:property value ='exameVo.rowid' />";
 				if(exameRowid === "") {
@@ -75,7 +73,16 @@
 					$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
 					$(".card-title").text("Editar Exame");
 				}
+				
+				exibirMensagem();
 			})
+			
+			function exibirMensagem() {
+				
+				var msg = $("#msg").text();
+				if(msg != "")
+				alert(msg);
+			}
 		</script>
 		
 	</body>
