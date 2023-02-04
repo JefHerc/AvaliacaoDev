@@ -23,14 +23,13 @@ public class AgendamentoBusiness {
 	}
 
 	public void salvarAgendamento(AgendamentoVo agendamentoVo) {
+//		if (exameVo.getNome().isEmpty())
+//		throw new IllegalArgumentException("Nome nao pode ser em branco");
+		validarAgendamento(agendamentoVo);
 		try {
-//			if (exameVo.getNome().isEmpty())
-//				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			boolean isAgendado = dao.isAgendado(agendamentoVo);
-			if (!isAgendado)
-				dao.insertAgendamento(agendamentoVo);
+			dao.insertAgendamento(agendamentoVo);
 		} catch (Exception e) {
-//			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
+			throw new BusinessException("Falha ao salvar o agendamento");
 		}
 
 	}
@@ -80,6 +79,13 @@ public class AgendamentoBusiness {
 		}
 
 		return agendamentos;
+	}
+
+	private void validarAgendamento(AgendamentoVo agendamentoVo) {
+		boolean isAgendado = dao.isAgendado(agendamentoVo);
+		if (isAgendado)
+			throw new BusinessException(
+					"Já existe um agendamento registrado para este Funcionário com este exame nesta data.");
 	}
 
 }

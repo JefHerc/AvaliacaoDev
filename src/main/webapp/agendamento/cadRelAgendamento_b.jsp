@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<jsp:include page="../mensagem.jsp" />
+
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +13,7 @@
 	<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 </head>
 
-<body class="bg-secondary">
+<body class="bg-secondary" onload="exibirMensagem()">
 	<jsp:include page="../navbar.html" />
 
 	<s:form action="/xlsRelatorios.action">
@@ -37,6 +39,13 @@
 	<div>
 		<img alt="" src="imagens/chart.png" >
 	</div>
+	<script type="text/javascript">
+		function exibirMensagem() {
+			var msg = mensagem;
+			if(msg != "")
+			alert(msg); }
+
+	</script>
 </body>
 
 </html>

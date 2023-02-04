@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
 import br.com.soc.sistema.business.FuncionarioBusiness;
 import br.com.soc.sistema.filter.FuncionarioFilter;
 import br.com.soc.sistema.infra.Action;
@@ -16,10 +20,11 @@ public class FuncionarioAction extends Action{
 	private FuncionarioBusiness business = new FuncionarioBusiness();
 	private FuncionarioFilter filtrar = new FuncionarioFilter();
 	private FuncionarioVo funcionarioVo = new FuncionarioVo();
-	
+	public String mensagemErro;
+	private HttpSession session = ServletActionContext.getRequest().getSession();
+
 	public String todos() {
 		funcionarios.addAll(business.trazerTodosOsFuncionarios());	
-
 		return SUCCESS;
 	}
 	
@@ -27,7 +32,13 @@ public class FuncionarioAction extends Action{
 		if(filtrar.isNullOpcoesCombo())
 			return REDIRECT;
 		
-		funcionarios = business.filtrarFuncionarios(filtrar);
+		try {
+			funcionarios = business.filtrarFuncionarios(filtrar);
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			return REDIRECT;
+		}
 		
 		return SUCCESS;
 	}
@@ -36,7 +47,13 @@ public class FuncionarioAction extends Action{
 		if(funcionarioVo.getNome() == null)
 			return INPUT;
 		
-		business.salvarFuncionario(funcionarioVo);
+		try {
+			business.salvarFuncionario(funcionarioVo);
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			return INPUT;
+		}
 		
 		return REDIRECT;
 	}
@@ -51,12 +68,23 @@ public class FuncionarioAction extends Action{
 	}
 	
 	public String alterar() {
-		business.alterarFuncionario(funcionarioVo);
+		try {
+			business.alterarFuncionario(funcionarioVo);
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			return INPUT;
+		}
 		return REDIRECT;
 	}
 	
 	public String deletar() {
-		business.deletarFuncionario(funcionarioVo.getRowid());
+		try {
+			business.deletarFuncionario(funcionarioVo.getRowid());
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+		}
 		return REDIRECT;
 	}
 
@@ -87,4 +115,18 @@ public class FuncionarioAction extends Action{
 	public void setFuncionarioVo(FuncionarioVo FuncionarioVo) {
 		this.funcionarioVo = FuncionarioVo;
 	}
+	
+	public String getMensagemErro() {
+		return mensagemErro;
+	}
+
+	public void setMensagemErro(String mensagemErro) {
+		this.mensagemErro = mensagemErro;
+	}
+	
+	private void exibirMensagemErro(String mensagemErro) {
+		setMensagemErro(mensagemErro);
+		session.setAttribute("mensagem", getMensagemErro());
+	}
+
 }

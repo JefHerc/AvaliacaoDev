@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"  pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<jsp:include page="../mensagem.jsp" />
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +9,7 @@
 		<title><s:text name="label.titulo.pagina.consulta"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
-	<body class="bg-secondary">	
+	<body class="bg-secondary" onload="exibirMensagem()">
 	<jsp:include page="../navbar.html" />
 	
 		<div class="container">
@@ -132,6 +134,12 @@
 			  // Pass the dataId to the Struts action
 			  $('#excluir').attr("href", agendamentoId);
 			});
+		
+		function exibirMensagem() {
+			var msg = mensagem;
+			if(msg != "")
+			alert(msg); }
+
 		</script>
 	</body>
 </html>

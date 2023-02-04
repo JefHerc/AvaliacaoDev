@@ -9,7 +9,7 @@
 		<title><s:text name="label.titulo.pagina.consulta"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
-	<body class="bg-secondary">	
+	<body class="bg-secondary" onload="exibirMensagem()">	
 	<jsp:include page="../navbar.html" />
 
 		<div class="container">
@@ -131,9 +131,6 @@
 			  $('#excluir').attr("href", exameId);
 			});
 
-		$(function(){
-			exibirMensagem();
-		})
 		function exibirMensagem() {
 			var msg = mensagem;
 			if(msg != "")

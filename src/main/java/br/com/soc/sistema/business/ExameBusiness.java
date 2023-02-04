@@ -11,7 +11,7 @@ import br.com.soc.sistema.vo.ExameVo;
 
 public class ExameBusiness {
 
-	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
+	private static final String INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID = "Informe um número para buscar por ID";
 	private static final String NOME_NAO_PODE_SER_EM_BRANCO = "Nome não pode ser em branco";
 	private ExameDao dao;
 	private AgendamentoDao daoAgendamento;
@@ -25,12 +25,13 @@ public class ExameBusiness {
 		return dao.findAllExames();
 	}
 
-	public void salvarExame(ExameVo exameVo) {
-		try {
-			if (exameVo.getNome().isEmpty())
-				throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
+	public String salvarExame(ExameVo exameVo) {
+		if (exameVo.getNome().isEmpty())
+			throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
 
+		try {
 			dao.insertExame(exameVo);
+			return "Exame cadastrado";
 		} catch (Exception e) {
 			throw new BusinessException("Não foi possível salvar o exame");
 		}
@@ -46,7 +47,7 @@ public class ExameBusiness {
 				Integer codigo = Integer.parseInt(filter.getValorBusca());
 				exames.add(dao.findByCodigo(codigo));
 			} catch (NumberFormatException e) {
-				throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+				throw new BusinessException(INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID);
 			}
 			break;
 
@@ -63,28 +64,30 @@ public class ExameBusiness {
 			Integer cod = Integer.parseInt(codigo);
 			return dao.findByCodigo(cod);
 		} catch (NumberFormatException e) {
-			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+			throw new BusinessException(INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID);
 		}
 	}
 
-	public void deletarExame(String codigo) {
+	public String deletarExame(String codigo) {
 		Integer cod = Integer.parseInt(codigo);
 		isExameAgendado(cod);
 
 		try {
 			dao.deleteExame(cod);
+			return "Exame deletado";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BusinessException("Falha ao deletar exame");
 		}
 	}
 
-	public void alterarExame(ExameVo exameVo) {
+	public String alterarExame(ExameVo exameVo) {
 		if(exameVo.getNome().isEmpty() || exameVo.getNome() == "")
 			throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
 		
 		try {
-			dao.editarExame(exameVo);		
+			dao.editarExame(exameVo);
+			return "Exame alterado";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BusinessException("Falha ao alterar exame");

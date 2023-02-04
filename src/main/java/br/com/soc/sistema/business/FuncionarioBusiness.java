@@ -11,7 +11,8 @@ import br.com.soc.sistema.vo.FuncionarioVo;
 
 public class FuncionarioBusiness {
 	
-	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
+	private static final String INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID = "Informe um número para buscar por ID";
+	private static final String NOME_NAO_PODE_SER_EM_BRANCO = "Nome não pode ser em branco";
 	private FuncionarioDao dao;
 	private AgendamentoDao daoAgendamento;
 
@@ -25,13 +26,13 @@ public class FuncionarioBusiness {
 	}
 
 	public void salvarFuncionario(FuncionarioVo FuncionarioVo) {
-		try {
-			if (FuncionarioVo.getNome().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
+		if (FuncionarioVo.getNome().isEmpty())
+			throw new IllegalArgumentException("Nome nao pode ser em branco");
 
+		try {
 			dao.insertFuncionario(FuncionarioVo);
 		} catch (Exception e) {
-			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
+			throw new BusinessException("Não foi possível salvar o funcionário");
 		}
 
 	}
@@ -45,7 +46,7 @@ public class FuncionarioBusiness {
 				Integer codigo = Integer.parseInt(filter.getValorBusca());
 				Funcionarios.add(dao.findByCodigo(codigo));
 			} catch (NumberFormatException e) {
-				throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+				throw new BusinessException(INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID);
 			}
 			break;
 
@@ -62,7 +63,7 @@ public class FuncionarioBusiness {
 			Integer cod = Integer.parseInt(codigo);
 			return dao.findByCodigo(cod);
 		} catch (NumberFormatException e) {
-			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+			throw new BusinessException(INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID);
 		}
 	}
 
@@ -73,7 +74,15 @@ public class FuncionarioBusiness {
 	}
 
 	public void alterarFuncionario(FuncionarioVo funcionarioVo) {
-		dao.editarFuncionario(funcionarioVo);		
+		if(funcionarioVo.getNome().isEmpty() || funcionarioVo.getNome() == "")
+			throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
+
+		try {
+			dao.editarFuncionario(funcionarioVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("Falha ao alterar exame");
+		}		
 	}
 
 }

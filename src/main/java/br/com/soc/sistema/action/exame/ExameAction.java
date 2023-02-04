@@ -23,9 +23,7 @@ public class ExameAction extends Action {
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
-
 		exames.addAll(business.trazerTodosOsExames());
-		System.out.println(mensagemErro);
 		return SUCCESS;
 	}
 
@@ -33,7 +31,13 @@ public class ExameAction extends Action {
 		if (filtrar.isNullOpcoesCombo())
 			return REDIRECT;
 
-		exames = business.filtrarExames(filtrar);
+		try {
+			exames = business.filtrarExames(filtrar);
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			return REDIRECT;
+		}
 
 		return SUCCESS;
 	}
@@ -42,7 +46,13 @@ public class ExameAction extends Action {
 		if (exameVo.getNome() == null)
 			return INPUT;
 
-		business.salvarExame(exameVo);
+		try {
+			business.salvarExame(exameVo);
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			return INPUT;
+		}
 
 		return REDIRECT;
 	}
@@ -51,7 +61,13 @@ public class ExameAction extends Action {
 		if (exameVo.getRowid() == null)
 			return REDIRECT;
 
-		exameVo = business.buscarExamePor(exameVo.getRowid());
+		try {
+			exameVo = business.buscarExamePor(exameVo.getRowid());
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			return REDIRECT;
+		}
 
 		return INPUT;
 	}
@@ -60,7 +76,7 @@ public class ExameAction extends Action {
 		try {
 			business.alterarExame(exameVo);
 		} catch (Exception e) {
-			mensagemErro = e.getMessage();
+			exibirMensagemErro(e.getMessage());
 			e.printStackTrace();
 			return INPUT;
 		}
@@ -71,8 +87,7 @@ public class ExameAction extends Action {
 		try {
 			business.deletarExame(exameVo.getRowid());
 		} catch (Exception e) {
-			mensagemErro = e.getMessage();
-			session.setAttribute("mensagem", mensagemErro);
+			exibirMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}	
 		return REDIRECT;
@@ -115,4 +130,8 @@ public class ExameAction extends Action {
 		this.mensagemErro = mensagemErro;
 	}
 	
+	private void exibirMensagemErro(String mensagemErro) {
+		setMensagemErro(mensagemErro);
+		session.setAttribute("mensagem", getMensagemErro());
+	}
 }

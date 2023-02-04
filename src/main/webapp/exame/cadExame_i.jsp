@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<jsp:include page="../mensagem.jsp" />
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title><s:text name="label.titulo.pagina.consulta"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
-	<body class="bg-secondary">
+	<body class="bg-secondary" onload="exibirMensagem()">
 	<jsp:include page="../navbar.html" />
 		<div class="container">
 			<s:form id="form-exame" action="#">
@@ -57,7 +59,6 @@
 				</div>
 			</s:form>			
 		</div>
-		 <label id="msg"><s:property value='mensagemErro'/></label>>
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript" src="javaScript/jquery.js"></script>
 		<script type="text/javascript" charset="UTF-8">
@@ -73,16 +74,15 @@
 					$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
 					$(".card-title").text("Editar Exame");
 				}
-				
-				exibirMensagem();
+
 			})
 			
-			function exibirMensagem() {
-				
-				var msg = $("#msg").text();
-				if(msg != "")
-				alert(msg);
-			}
+		function exibirMensagem() {
+			var msg = mensagem;
+			if(msg != "")
+			alert(msg); }
+
+			
 		</script>
 		
 	</body>

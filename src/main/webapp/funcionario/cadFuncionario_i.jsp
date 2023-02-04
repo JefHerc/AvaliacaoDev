@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<jsp:include page="../mensagem.jsp" />
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +9,7 @@
 		<title></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
-	<body class="bg-secondary">
+	<body class="bg-secondary" onload="exibirMensagem()">
 	<jsp:include page="../navbar.html" />
 
 		<div class="container">
@@ -19,7 +21,7 @@
 						<div class="row">
 							<div class="col-sm-5">
 								<s:url action="todosFuncionarios" var="todos"/>
-								<a href="${todos}" class="btn btn-success" >Funcion√°rios</a>
+								<a href="${todos}" class="btn btn-success" >Funcion·rios</a>
 							</div>
 							
 							<div class="col-sm">
@@ -31,7 +33,7 @@
 					<div class="card-body">
 						<div class="row align-items-center">
 							<label for="id" class="col-sm-1 col-form-label text-center">
-								C√≥digo:
+								CÛdigo:
 							</label>	
 
 							<div class="col-sm-2">
@@ -53,7 +55,7 @@
 					<div class="card-footer">
 						<div class="form-row">
 							<button class="btn btn-primary col-sm-4 offset-sm-1">Salvar</button>
-							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formul√°rio</button>
+							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formul·rio</button>
 						</div>
 					</div>
 				</div>
@@ -75,6 +77,11 @@
 					$(".card-title").text("Editar Funcionario");
 				}
 			})
+			
+			function exibirMensagem() {
+			var msg = mensagem;
+			if(msg != "")
+			alert(msg); }
 		</script>
 		
 	</body>
