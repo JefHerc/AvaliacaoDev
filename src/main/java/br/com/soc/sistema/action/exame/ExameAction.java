@@ -47,7 +47,7 @@ public class ExameAction extends Action {
 			return INPUT;
 
 		try {
-			business.salvarExame(exameVo);
+			business.salvarExame(exameVo.getNome());
 		} catch (Exception e) {
 			exibirMensagemErro(e.getMessage());
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class ExameAction extends Action {
 			return REDIRECT;
 
 		try {
-			exameVo = business.buscarExamePor(exameVo.getRowid());
+			exameVo = business.buscarExamePorId(exameVo.getRowid());
 		} catch (Exception e) {
 			exibirMensagemErro(e.getMessage());
 			e.printStackTrace();

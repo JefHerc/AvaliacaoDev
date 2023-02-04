@@ -13,11 +13,11 @@ import br.com.soc.sistema.vo.ExameVo;
 
 public class ExameDao extends Dao {
 
-	public void insertExame(ExameVo exameVo) {
+	public void insertExame(String nomeExame) {
 		StringBuilder query = new StringBuilder("INSERT INTO exame (nm_exame) values (?)");
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
-			ps.setString(1, exameVo.getNome());
+			ps.setString(1, nomeExame);
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -99,32 +99,36 @@ public class ExameDao extends Dao {
 		return null;
 	}
 
-	public void deleteExame(Integer codigo) {
+	public boolean deleteExame(Integer codigo) {
 		StringBuilder query = new StringBuilder("DELETE FROM exame WHERE rowid = ?");
+		int verificadorModificacao = 0;
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
 			ps.setInt(1, codigo);
-			ps.executeUpdate();
-
+			verificadorModificacao = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return (verificadorModificacao > 0 ? true : false);
 	}
 
-	public void editarExame(ExameVo exameVo) {
+	public boolean editarExame(ExameVo exameVo) {
 		StringBuilder query = new StringBuilder("UPDATE exame SET nm_exame = ? WHERE rowid = ?");
+		int verificadorModificacao = 0;
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			
 			int cod = Integer.parseInt(exameVo.getRowid());
 			ps.setString(1, exameVo.getNome());
 			ps.setInt(2, cod);
-			ps.executeUpdate();
+			verificadorModificacao = ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		return (verificadorModificacao > 0 ? true : false);
+
 	}
 
 }

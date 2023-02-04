@@ -25,17 +25,17 @@ public class ExameBusiness {
 		return dao.findAllExames();
 	}
 
-	public String salvarExame(ExameVo exameVo) {
-		if (exameVo.getNome().isEmpty())
+	public String salvarExame(String nomeExame) {
+		if (nomeExame.isEmpty())
 			throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
 
 		try {
-			dao.insertExame(exameVo);
-			return "Exame cadastrado";
+			dao.insertExame(nomeExame);
 		} catch (Exception e) {
 			throw new BusinessException("Não foi possível salvar o exame");
 		}
 
+		return "Exame salvo com sucesso!";
 	}
 
 	public List<ExameVo> filtrarExames(ExameFilter filter) {
@@ -43,60 +43,88 @@ public class ExameBusiness {
 
 		switch (filter.getOpcoesCombo()) {
 		case ID:
-			try {
-				Integer codigo = Integer.parseInt(filter.getValorBusca());
-				exames.add(dao.findByCodigo(codigo));
-			} catch (NumberFormatException e) {
-				throw new BusinessException(INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID);
-			}
+			buscarExamePorId(filter.getValorBusca());
 			break;
 
 		case NOME:
-			exames.addAll(dao.findAllByNome(filter.getValorBusca()));
+			exames.addAll(buscarExamePorNome(filter.getValorBusca()));
 			break;
 		}
 
 		return exames;
 	}
 
-	public ExameVo buscarExamePor(String codigo) {
+	public ExameVo buscarExamePorId(String codigo) {
+		ExameVo exame = new ExameVo();
 		try {
 			Integer cod = Integer.parseInt(codigo);
-			return dao.findByCodigo(cod);
+			exame = dao.findByCodigo(cod);
 		} catch (NumberFormatException e) {
 			throw new BusinessException(INFORME_UM_NUMERO_PARA_BUSCAR_POR_ID);
 		}
+
+		if (exame == null)
+			throw new BusinessException("Exame não localizado");
+
+		return exame;
+	}
+
+	public List<ExameVo> buscarExamePorNome(String nome) {
+		List<ExameVo> exames = new ArrayList<>();
+		try {
+			exames = dao.findAllByNome(nome);
+		} catch (NumberFormatException e) {
+			throw new BusinessException("Falha ao localizar o exame");
+		}
+		
+		if (exames.isEmpty())
+			throw new BusinessException("Nenhum exame localizado com este nome");
+
+		return exames;
 	}
 
 	public String deletarExame(String codigo) {
 		Integer cod = Integer.parseInt(codigo);
 		isExameAgendado(cod);
 
+		boolean isDeletado = false;
+
 		try {
-			dao.deleteExame(cod);
-			return "Exame deletado";
+			isDeletado = dao.deleteExame(cod);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BusinessException("Falha ao deletar exame");
 		}
+
+		if (!isDeletado)
+			throw new BusinessException("Código do exame inválido");
+
+		return "Exame deletado com sucesso!";
 	}
 
 	public String alterarExame(ExameVo exameVo) {
-		if(exameVo.getNome().isEmpty() || exameVo.getNome() == "")
+		if (exameVo.getNome().isEmpty() || exameVo.getNome() == "")
 			throw new IllegalArgumentException(NOME_NAO_PODE_SER_EM_BRANCO);
-		
+
+		boolean isAlterado = false;
+
 		try {
-			dao.editarExame(exameVo);
-			return "Exame alterado";
+			isAlterado = dao.editarExame(exameVo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BusinessException("Falha ao alterar exame");
 		}
+
+		if (!isAlterado)
+			throw new BusinessException("Código do exame inválido");
+
+		return "Exame alterado com sucesso!";
 	}
-	
+
 	private void isExameAgendado(int cod) {
 		boolean exameAgendado = daoAgendamento.isExamePossuiAgendamentos(cod);
-		if(exameAgendado)
-			throw new BusinessException("Este exame não pode ser excluído pois está vinculado a um ou mais agendamentos");
+		if (exameAgendado)
+			throw new BusinessException(
+					"Este exame não pode ser excluído pois está vinculado a um ou mais agendamentos");
 	}
 }
