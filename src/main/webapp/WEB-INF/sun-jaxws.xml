@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<endpoints xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime'
-        version='2.0'>
-     <endpoint name="WebServiceExamesImpl" 
-        implementation="br.com.soc.sistema.soap.WebServiceExamesImpl" 
-        url-pattern="/soap" ></endpoint>
+<endpoints
+	xmlns='http://java.sun.com/xml/ns/jax-ws/ri/runtime' version='2.0'>
+	<endpoint name="WebServiceExamesImpl"
+		implementation="br.com.soc.sistema.soap.exame.WebServiceExamesImpl"
+		url-pattern="/exame"></endpoint>
+	<endpoint name="WebServiceFuncionariosImpl"
+		implementation="br.com.soc.sistema.soap.funcionario.WebServiceFuncionariosImpl"
+		url-pattern="/funcionario"></endpoint>
 </endpoints>

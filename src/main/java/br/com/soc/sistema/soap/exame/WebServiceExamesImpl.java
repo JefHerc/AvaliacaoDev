@@ -1,4 +1,4 @@
-package br.com.soc.sistema.soap;
+package br.com.soc.sistema.soap.exame;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.lista.ListaExames;
 import br.com.soc.sistema.vo.ExameVo;
 
-@WebService(endpointInterface = "br.com.soc.sistema.soap.WebServiceExames" )
+@WebService(endpointInterface = "br.com.soc.sistema.soap.exame.WebServiceExames" )
 public class WebServiceExamesImpl implements WebServiceExames {
 
 	private ExameBusiness business;

@@ -55,7 +55,7 @@ public class ExameBusiness {
 	}
 
 	public ExameVo buscarExamePorId(String codigo) {
-		ExameVo exame = new ExameVo();
+		ExameVo exame = null;
 		try {
 			Integer cod = Integer.parseInt(codigo);
 			exame = dao.findByCodigo(cod);

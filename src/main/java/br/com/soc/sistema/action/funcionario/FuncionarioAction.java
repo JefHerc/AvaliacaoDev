@@ -48,7 +48,7 @@ public class FuncionarioAction extends Action{
 			return INPUT;
 		
 		try {
-			business.salvarFuncionario(funcionarioVo);
+			business.salvarFuncionario(funcionarioVo.getNome());
 		} catch (Exception e) {
 			exibirMensagemErro(e.getMessage());
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class FuncionarioAction extends Action{
 		if(funcionarioVo.getRowid() == null)
 			return REDIRECT;
 
-		funcionarioVo = business.buscarFuncionarioPor(funcionarioVo.getRowid());
+		funcionarioVo = business.buscarFuncionarioPorId(funcionarioVo.getRowid());
 		
 		return INPUT;
 	}

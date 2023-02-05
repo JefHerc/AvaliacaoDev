@@ -1,6 +1,4 @@
-package br.com.soc.sistema.soap;
-
-import java.util.List;
+package br.com.soc.sistema.soap.exame;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

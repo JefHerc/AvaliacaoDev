@@ -32,12 +32,11 @@ public class AgendamentoDao extends Dao {
 	}
 
 	public List<AgendamentoVo> findAllAgendamentos() {
-		StringBuilder query = new StringBuilder();
-		query.append(
-				"SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
-		query.append("FROM agendamento age ");
-		query.append("JOIN funcionario func ON age.cd_funcionario = func.rowid ");
-		query.append("JOIN exame exa ON age.cd_exame = exa.rowid;");
+		StringBuilder query = new StringBuilder("SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, ")
+				.append("age.cd_exame, exa.nm_exame, age.data_agendamento ")
+				.append("FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid ORDER BY age.data_agendamento;");
+
 		try (Connection con = getConexao();
 				PreparedStatement ps = con.prepareStatement(query.toString());
 				ResultSet rs = ps.executeQuery()) {
@@ -69,21 +68,25 @@ public class AgendamentoDao extends Dao {
 		}
 	}
 
-	public void deleteAgendamentosPorFuncionario(Integer codigo) {
-		StringBuilder query = new StringBuilder("DELETE FROM agendamento WHERE cd_funcionario = ?");
+	public boolean isFuncionairoAgendado(Integer codigo) {
+		StringBuilder query = new StringBuilder("SELECT EXISTS(SELECT 1 FROM agendamento WHERE cd_funcionario = ?)");
+		boolean isAgendado = false;
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
-
 			ps.setInt(1, codigo);
-			ps.executeUpdate();
 
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next())
+					isAgendado = rs.getBoolean(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isAgendado;
 	}
 
 	public void editarAgendamento(AgendamentoVo agendamentoVo) {
-		StringBuilder query = new StringBuilder(
-				"UPDATE agendamento SET cd_funcionario = ?, cd_exame = ?, data_agendamento = ? WHERE rowid = ?");
+		StringBuilder query = new StringBuilder("UPDATE agendamento SET cd_funcionario = ?, ")
+				.append("cd_exame = ?, data_agendamento = ? WHERE rowid = ?");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			int cdFuncionario = Integer.parseInt(agendamentoVo.getFuncionario().getRowid());
@@ -100,12 +103,10 @@ public class AgendamentoDao extends Dao {
 	}
 
 	public AgendamentoVo findByCodigo(int codigo) {
-		StringBuilder query = new StringBuilder(
-				"SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
-		query.append("FROM agendamento age ");
-		query.append("JOIN funcionario func ON age.cd_funcionario = func.rowid ");
-		query.append("JOIN exame exa ON age.cd_exame = exa.rowid ");
-		query.append("WHERE age.rowid = ?");
+		StringBuilder query = new StringBuilder("SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, ")
+				.append("age.cd_exame, exa.nm_exame, age.data_agendamento FROM agendamento age ")
+				.append("JOIN funcionario func ON age.cd_funcionario = func.rowid ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid WHERE age.rowid = ?");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			int i = 1;
@@ -127,12 +128,11 @@ public class AgendamentoDao extends Dao {
 	}
 
 	public List<AgendamentoVo> findAllByFuncionario(String nomeFuncionario) {
-		StringBuilder query = new StringBuilder(
-				"SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
-		query.append("FROM agendamento age ");
-		query.append("JOIN funcionario func ON age.cd_funcionario = func.rowid ");
-		query.append("JOIN exame exa ON age.cd_exame = exa.rowid ");
-		query.append("WHERE LOWER(func.nm_funcionario) LIKE LOWER(?)");
+		StringBuilder query = new StringBuilder("SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, ")
+				.append("age.cd_exame, exa.nm_exame, age.data_agendamento FROM agendamento age ")
+				.append("JOIN funcionario func ON age.cd_funcionario = func.rowid ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid ")
+				.append("WHERE LOWER(func.nm_funcionario) LIKE LOWER(?)");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
@@ -154,12 +154,11 @@ public class AgendamentoDao extends Dao {
 	}
 
 	public List<AgendamentoVo> findAllByExame(String nomeExame) {
-		StringBuilder query = new StringBuilder(
-				"SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
-		query.append("FROM agendamento age ");
-		query.append("JOIN funcionario func ON age.cd_funcionario = func.rowid ");
-		query.append("JOIN exame exa ON age.cd_exame = exa.rowid ");
-		query.append("WHERE LOWER(exa.nm_exame) LIKE LOWER(?)");
+		StringBuilder query = new StringBuilder("SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, ")
+				.append("age.cd_exame, exa.nm_exame, age.data_agendamento ")
+				.append("FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid ")
+				.append("WHERE LOWER(exa.nm_exame) LIKE LOWER(?)");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
@@ -181,12 +180,11 @@ public class AgendamentoDao extends Dao {
 	}
 
 	public List<AgendamentoVo> findAllByData(LocalDate data) {
-		StringBuilder query = new StringBuilder();
-		query.append(
-				"SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
-		query.append(
-				"FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid JOIN exame exa ON age.cd_exame = exa.rowid ");
-		query.append("WHERE data_agendamento = ?;");
+		StringBuilder query = new StringBuilder("SELECT age.rowid, age.cd_funcionario, func.nm_funcionario, ")
+				.append("age.cd_exame, exa.nm_exame, age.data_agendamento ")
+				.append("FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid WHERE data_agendamento = ?;");
+
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			ps.setObject(1, data);
 			try (ResultSet rs = ps.executeQuery()) {
@@ -224,9 +222,8 @@ public class AgendamentoDao extends Dao {
 
 	public boolean isAgendado(AgendamentoVo agendamentoVo) {
 		boolean isAgendado = false;
-		StringBuilder query = new StringBuilder();
-		query.append("SELECT EXISTS(SELECT 1 FROM agendamento WHERE cd_exame = ? ");
-		query.append("AND cd_funcionario = ? AND data_agendamento = ?);");
+		StringBuilder query = new StringBuilder("SELECT EXISTS(SELECT 1 FROM agendamento WHERE cd_exame = ? ")
+				.append("AND cd_funcionario = ? AND data_agendamento = ?);");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			ps.setInt(1, Integer.parseInt(agendamentoVo.getExame().getRowid()));
@@ -238,7 +235,6 @@ public class AgendamentoDao extends Dao {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -246,12 +242,11 @@ public class AgendamentoDao extends Dao {
 	}
 
 	public List<AgendamentoVo> findAllByRangeData(LocalDate dataInicio, LocalDate dataFim) {
-		StringBuilder query = new StringBuilder();
-		query.append(
-				"SELECT age.cd_funcionario, func.nm_funcionario, age.cd_exame, exa.nm_exame, age.data_agendamento ");
-		query.append(
-				"FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid JOIN exame exa ON age.cd_exame = exa.rowid ");
-		query.append("WHERE (data_agendamento >= ? AND data_agendamento <= ?);");
+		StringBuilder query = new StringBuilder("SELECT age.cd_funcionario, func.nm_funcionario, ")
+				.append("age.cd_exame, exa.nm_exame, age.data_agendamento ")
+				.append("FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid ")
+				.append("WHERE (data_agendamento >= ? AND data_agendamento <= ?);");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
