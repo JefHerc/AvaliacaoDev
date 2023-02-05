@@ -65,7 +65,7 @@ public class AgendamentoAction extends Action {
 
 		carregarListas();
 
-		agendamentoVo = business.buscarAgendamentoPor(agendamentoVo.getRowid());
+		agendamentoVo = business.buscarAgendamentoPorId(agendamentoVo.getRowid().toString());
 
 		return INPUT;
 	}

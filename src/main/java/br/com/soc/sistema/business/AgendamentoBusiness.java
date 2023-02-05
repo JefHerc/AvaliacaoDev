@@ -1,6 +1,7 @@
 package br.com.soc.sistema.business;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class AgendamentoBusiness {
 		return dao.findAllAgendamentos();
 	}
 
-	public void salvarAgendamento(AgendamentoVo agendamentoVo) {
+	public String salvarAgendamento(AgendamentoVo agendamentoVo) {
 //		if (exameVo.getNome().isEmpty())
 //		throw new IllegalArgumentException("Nome nao pode ser em branco");
 		validarAgendamento(agendamentoVo);
@@ -32,22 +33,64 @@ public class AgendamentoBusiness {
 			throw new BusinessException("Falha ao salvar o agendamento");
 		}
 
+		return "Agendamento salvo com sucesso!";
 	}
 
-	public AgendamentoVo buscarAgendamentoPor(int codigo) {
+	public AgendamentoVo buscarAgendamentoPorId(String codigo) {
 		try {
-			return dao.findByCodigo(codigo);
+			Integer cod = Integer.parseInt(codigo);
+			return dao.findByCodigo(cod);
 		} catch (NumberFormatException e) {
 			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
 		}
 	}
 
-	public void deletarAgendamento(int codigo) {
-		dao.deleteAgendamento(codigo);
+	public List<AgendamentoVo> buscarAgendamentoPorFuncionario(String nome) {
+		List<AgendamentoVo> agendamentos = new ArrayList<>();
+		try {
+			agendamentos = dao.findAllByFuncionario(nome);
+		} catch (NumberFormatException e) {
+			throw new BusinessException("Falha ao localizar o exame");
+		}
+
+		if (agendamentos.isEmpty())
+			throw new BusinessException("Nenhum exame localizado com este nome");
+
+		return agendamentos;
+
 	}
 
-	public void alterarAgendamento(AgendamentoVo agendamentoVo) {
+	public List<AgendamentoVo> buscarAgendamentoPorExame(String nome) {
+		List<AgendamentoVo> agendamentos = new ArrayList<>();
+		try {
+			agendamentos = dao.findAllByExame(nome);
+		} catch (NumberFormatException e) {
+			throw new BusinessException("Falha ao localizar o exame");
+		}
+
+		if (agendamentos.isEmpty())
+			throw new BusinessException("Nenhum exame localizado com este nome");
+
+		return agendamentos;
+
+	}
+
+	public List<AgendamentoVo> buscarAgendamentoPorData(String data) {
+		List<AgendamentoVo> agendamentos = new ArrayList<>();
+		LocalDate dataConvertida = convertStringToLocalDate(data);
+		agendamentos.addAll(dao.findAllByData(dataConvertida));
+		return agendamentos;
+	}
+
+	public String deletarAgendamento(int codigo) {
+		dao.deleteAgendamento(codigo);
+		return "Agendamento deletado com sucesso!";
+	}
+
+	public String alterarAgendamento(AgendamentoVo agendamentoVo) {
+		validarAgendamento(agendamentoVo);
 		dao.editarAgendamento(agendamentoVo);
+		return "Agendamento alterado com sucesso!";
 	}
 
 	public List<AgendamentoVo> filtrarAgendamentos(AgendamentoFilter filter) {
@@ -55,26 +98,19 @@ public class AgendamentoBusiness {
 
 		switch (filter.getOpcoesCombo()) {
 		case ID:
-			try {
-				Integer codigo = Integer.parseInt(filter.getValorBusca());
-				agendamentos.add(dao.findByCodigo(codigo));
-			} catch (NumberFormatException e) {
-				throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
-			}
+			buscarAgendamentoPorId(filter.getValorBusca());
 			break;
 
 		case FUNCIONARIO:
-			agendamentos.addAll(dao.findAllByFuncionario(filter.getValorBusca()));
+			buscarAgendamentoPorFuncionario(filter.getValorBusca());
 			break;
 
 		case EXAME:
-			agendamentos.addAll(dao.findAllByExame(filter.getValorBusca()));
+			buscarAgendamentoPorExame(filter.getValorBusca());
 			break;
 
 		case DATA:
-			String data = filter.getValorBusca();
-			LocalDate dataConvertida = LocalDate.parse(data);
-			agendamentos.addAll(dao.findAllByData(dataConvertida));
+			buscarAgendamentoPorData(filter.getValorBusca());
 			break;
 		}
 
@@ -88,4 +124,14 @@ public class AgendamentoBusiness {
 					"Já existe um agendamento registrado para este Funcionário com este exame nesta data.");
 	}
 
+	private LocalDate convertStringToLocalDate(String data) {
+		DateTimeFormatter formatter;
+		if (data.contains("-")) {
+			formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		} else {
+			formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		}
+		LocalDate localDate = LocalDate.parse(data, formatter);
+		return localDate;
+	}
 }

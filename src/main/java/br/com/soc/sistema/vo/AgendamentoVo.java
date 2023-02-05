@@ -32,7 +32,13 @@ public class AgendamentoVo {
 		this.exame = exame;
 		this.dataAgendamento = dataAgendamento;
 	}
-
+	
+	public AgendamentoVo(FuncionarioVo funcionario, ExameVo exame, LocalDate dataAgendamento) {
+		this.funcionario = funcionario;
+		this.exame = exame;
+		this.dataAgendamento = dataAgendamento;
+	}
+	
 	public Integer getRowid() {
 		return rowid;
 	}
