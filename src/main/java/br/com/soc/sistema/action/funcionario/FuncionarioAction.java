@@ -24,11 +24,17 @@ public class FuncionarioAction extends Action{
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		funcionarios.addAll(business.trazerTodosOsFuncionarios());	
 		return SUCCESS;
 	}
 	
 	public String filtrar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if(filtrar.isNullOpcoesCombo())
 			return REDIRECT;
 		
@@ -44,6 +50,9 @@ public class FuncionarioAction extends Action{
 	}
 	
 	public String novo() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if(funcionarioVo.getNome() == null)
 			return INPUT;
 		
@@ -59,6 +68,9 @@ public class FuncionarioAction extends Action{
 	}
 	
 	public String editar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if(funcionarioVo.getRowid() == null)
 			return REDIRECT;
 
@@ -68,6 +80,9 @@ public class FuncionarioAction extends Action{
 	}
 	
 	public String alterar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		try {
 			business.alterarFuncionario(funcionarioVo);
 		} catch (Exception e) {
@@ -79,6 +94,9 @@ public class FuncionarioAction extends Action{
 	}
 	
 	public String deletar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		try {
 			business.deletarFuncionario(funcionarioVo.getRowid());
 		} catch (Exception e) {

@@ -23,11 +23,17 @@ public class ExameAction extends Action {
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		exames.addAll(business.trazerTodosOsExames());
 		return SUCCESS;
 	}
 
 	public String filtrar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if (filtrar.isNullOpcoesCombo())
 			return REDIRECT;
 
@@ -43,6 +49,9 @@ public class ExameAction extends Action {
 	}
 
 	public String novo() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if (exameVo.getNome() == null)
 			return INPUT;
 
@@ -58,6 +67,9 @@ public class ExameAction extends Action {
 	}
 
 	public String editar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if (exameVo.getRowid() == null)
 			return REDIRECT;
 
@@ -73,6 +85,9 @@ public class ExameAction extends Action {
 	}
 
 	public String alterar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		try {
 			business.alterarExame(exameVo);
 		} catch (Exception e) {
@@ -84,6 +99,9 @@ public class ExameAction extends Action {
 	}
 
 	public String deletar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		try {
 			business.deletarExame(exameVo.getRowid());
 		} catch (Exception e) {

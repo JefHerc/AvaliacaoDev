@@ -3,7 +3,9 @@ package br.com.soc.sistema.action.agendamento;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -17,6 +19,7 @@ import br.com.soc.sistema.infra.OpcoesComboBuscarAgendamentos;
 import br.com.soc.sistema.vo.AgendamentoVo;
 import br.com.soc.sistema.vo.ExameVo;
 import br.com.soc.sistema.vo.FuncionarioVo;
+import br.com.soc.sistema.vo.LoginVo;
 
 public class AgendamentoAction extends Action {
 
@@ -32,11 +35,17 @@ public class AgendamentoAction extends Action {
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
+		if(!isUserAutenticado())
+			return "loginError";
+			
 		agendamentos.addAll(business.trazerTodosOsAgendamentos());
 		return SUCCESS;
 	}
 
 	public String novo() {
+		if(!isUserAutenticado())
+			return "loginError";
+		
 		if (agendamentoVo.getFuncionario() == null) {
 			carregarListas();
 			return INPUT;
@@ -55,11 +64,17 @@ public class AgendamentoAction extends Action {
 	}
 
 	public String deletar() {
+		if(!isUserAutenticado())
+			return "loginError";
+		
 		business.deletarAgendamento(agendamentoVo.getRowid());
 		return REDIRECT;
 	}
 
 	public String editar() {
+		if(!isUserAutenticado())
+			return "loginError";
+		
 		if (agendamentoVo.getRowid() == null)
 			return REDIRECT;
 
@@ -71,11 +86,17 @@ public class AgendamentoAction extends Action {
 	}
 
 	public String alterar() {
+		if(!isUserAutenticado())
+			return "loginError";
+		
 		business.alterarAgendamento(agendamentoVo);
 		return REDIRECT;
 	}
 
 	public String filtrar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		if (filtrar.isNullOpcoesCombo())
 			return REDIRECT;
 
@@ -175,5 +196,4 @@ public class AgendamentoAction extends Action {
 		setMensagemErro(mensagemErro);
 		session.setAttribute("mensagem", getMensagemErro());
 	}
-
 }

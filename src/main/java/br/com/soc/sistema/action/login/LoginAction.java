@@ -2,6 +2,7 @@ package br.com.soc.sistema.action.login;
 
 import java.util.Map;
 
+import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.SessionAware;
 
 import br.com.soc.sistema.business.LoginBusiness;
@@ -22,7 +23,7 @@ public class LoginAction extends Action implements SessionAware {
 
 		boolean loginValido = business.validarLogin(loginVo);
 		if (loginValido) {
-			session.put("user", loginVo);
+			session.put("userLogado", loginVo);
 			return SUCCESS;
 		} else {
 			return "login";
@@ -30,7 +31,7 @@ public class LoginAction extends Action implements SessionAware {
 	}
 
 	public String logout() {
-		session.remove("user");
+		session.remove("userLogado");
 		return "login";
 	}
 
@@ -43,8 +44,8 @@ public class LoginAction extends Action implements SessionAware {
 	}
 
 	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
+	public void setSession(Map<String, Object> map) {
+		this.session = (SessionMap<String, Object>) map;
 	}
 
 }

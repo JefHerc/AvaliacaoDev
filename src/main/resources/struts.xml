@@ -12,6 +12,9 @@
 	<constant name="struts.action.excludePattern" value="/webjars/.*,/h2-console/*" />
 
 	<package name="br.com.soc.sistema" extends="struts-default" strict-method-invocation="false">
+        <global-results>
+            <result name="loginError">/login/cadLogin.jsp</result>
+        </global-results>        
 		<action name="*Exames" class="br.com.soc.sistema.action.exame.ExameAction" method="{1}">
 			<result name="success">/exame/cadExame_b.jsp</result>
 			<result name="input">/exame/cadExame_i.jsp</result>
