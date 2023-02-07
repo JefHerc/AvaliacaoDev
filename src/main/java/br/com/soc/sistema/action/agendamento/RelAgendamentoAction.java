@@ -31,6 +31,9 @@ public class RelAgendamentoAction extends Action {
 	}
 
 	public String xls() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		try {
 			HSSFWorkbook workbook = business.gerarXls(dataInicio, dataFim);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

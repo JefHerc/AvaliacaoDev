@@ -246,7 +246,7 @@ public class AgendamentoDao extends Dao {
 				.append("age.cd_exame, exa.nm_exame, age.data_agendamento ")
 				.append("FROM agendamento age JOIN funcionario func ON age.cd_funcionario = func.rowid ")
 				.append("JOIN exame exa ON age.cd_exame = exa.rowid ")
-				.append("WHERE (data_agendamento >= ? AND data_agendamento <= ?);");
+				.append("WHERE (data_agendamento >= ? AND data_agendamento <= ?) ORDER BY data_agendamento;");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 

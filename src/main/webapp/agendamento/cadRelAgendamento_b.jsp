@@ -18,9 +18,9 @@
 
 	<s:form action="/xlsRelatorios.action">
 		<s:text name="">Data Inicio</s:text>
-		<s:textfield type="date" name="dataInicio"></s:textfield>
+		<s:textfield type="text" name="dataInicio" data-mask="00/00/0000" placeholder="__/__/____" />
 		<s:text name="">Data Fim</s:text>
-		<s:textfield type="date" name="dataFim"></s:textfield>
+		<s:textfield type="text" name="dataFim" data-mask="00/00/0000" placeholder="__/__/____" />
 		<button class="btn btn-primary" type="submit">
 			<s:text name="label.pesquisar" />
 		</button>
@@ -39,6 +39,11 @@
 	<div>
 		<img alt="" src="imagens/chart.png" >
 	</div>
+	<script src="javaScript/jquery.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+	<script src="javaScript/main.js"></script>
+	
 	<script type="text/javascript">
 		function exibirMensagem() {
 			var msg = mensagem;
