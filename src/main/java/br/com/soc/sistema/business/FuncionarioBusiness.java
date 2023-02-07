@@ -42,7 +42,7 @@ public class FuncionarioBusiness {
 
 		switch (filter.getOpcoesCombo()) {
 		case ID:
-			buscarFuncionarioPorId(filter.getValorBusca());
+			Funcionarios.add(buscarFuncionarioPorId(filter.getValorBusca()));
 			break;
 
 		case NOME:

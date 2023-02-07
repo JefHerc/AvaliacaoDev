@@ -1,6 +1,5 @@
 package br.com.soc.sistema.business;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;

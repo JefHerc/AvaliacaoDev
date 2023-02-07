@@ -13,13 +13,17 @@ public class ConversorStringToDate extends StrutsTypeConverter {
 		if (strings == null || strings.length == 0 || strings[0].trim().length() == 0) {
 			return null;
 		}
-		return LocalDate.parse(strings[0]);
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return LocalDate.parse(strings[0], dtf);
 	}
 
 	@Override
 	public String convertToString(Map arg0, Object date) {
+		if(date == null) 
+			return "";
+		
 		LocalDate data = (LocalDate) date;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		String dataFormatada = data.format(dtf);
 		return dataFormatada;
 	}

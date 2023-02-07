@@ -48,8 +48,8 @@ public class FuncionarioDao extends Dao {
 	}
 
 	public List<FuncionarioVo> findAllByNome(String nome) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario ORDER BY nm_funcionario")
-				.append("WHERE lower(nm_funcionario) like lower(?)");
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario ")
+				.append("WHERE lower(nm_funcionario) like lower(?) ORDER BY nm_funcionario");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 			int i = 1;
@@ -76,13 +76,12 @@ public class FuncionarioDao extends Dao {
 	}
 
 	public FuncionarioVo findByCodigo(Integer codigo) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario")
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_funcionario nome FROM funcionario ")
 				.append("WHERE rowid = ?");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
-			int i = 1;
 
-			ps.setInt(i, codigo);
+			ps.setInt(1, codigo);
 
 			try (ResultSet rs = ps.executeQuery()) {
 				FuncionarioVo vo = null;

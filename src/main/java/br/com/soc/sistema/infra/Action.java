@@ -13,7 +13,8 @@ public class Action extends ActionSupport {
 	
     protected boolean isUserAutenticado() {
 		HttpSession session = ServletActionContext.getRequest().getSession(true);
-    	LoginVo isLogado = (LoginVo) session.getAttribute("userLogado");     	
-        return (isLogado != null && isLogado.getUser() != "");
+    	Object isLogado = session.getAttribute("userLogado");
+    	LoginVo login = (LoginVo) isLogado;
+        return (login != null && !login.getUser().equals(""));
     }
 }

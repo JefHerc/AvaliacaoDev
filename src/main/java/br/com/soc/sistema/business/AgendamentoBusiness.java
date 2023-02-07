@@ -98,19 +98,19 @@ public class AgendamentoBusiness {
 
 		switch (filter.getOpcoesCombo()) {
 		case ID:
-			buscarAgendamentoPorId(filter.getValorBusca());
+			agendamentos.add(buscarAgendamentoPorId(filter.getValorBusca()));
 			break;
 
 		case FUNCIONARIO:
-			buscarAgendamentoPorFuncionario(filter.getValorBusca());
+			agendamentos.addAll(buscarAgendamentoPorFuncionario(filter.getValorBusca()));
 			break;
 
 		case EXAME:
-			buscarAgendamentoPorExame(filter.getValorBusca());
+			agendamentos.addAll(buscarAgendamentoPorExame(filter.getValorBusca()));
 			break;
 
 		case DATA:
-			buscarAgendamentoPorData(filter.getValorBusca());
+			agendamentos.addAll(buscarAgendamentoPorData(filter.getValorBusca()));
 			break;
 		}
 

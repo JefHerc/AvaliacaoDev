@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title><s:text name="label.titulo.pagina.consulta"/></title>
+		<title></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary" onload="exibirMensagem()">
@@ -61,29 +61,22 @@
 		</div>
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		<script type="text/javascript" src="javaScript/jquery.js"></script>
-		<script type="text/javascript" charset="UTF-8">
-			$(function(){
-				var exameRowid = "<s:property value ='exameVo.rowid' />";
-				if(exameRowid === "") {
-					console.log('exameRowid vazio')
-					$("#form-exame").attr("action", "/avaliacao/novoExames.action");
-					$("title").text("<s:text name='label.titulo.pagina.cadastro' />");
-					$(".card-title").text("Novo Exame");
-				} else {
-					$("#form-exame").attr('action', '/avaliacao/alterarExames.action');
-					$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
-					$(".card-title").text("Editar Exame");
-				}
+		<script type="text/javascript" src="javaScript/main.js"></script>
+		<script type="text/javascript">
+		$(function() {
+			var exameRowid = "<s:property value ='exameVo.rowid' />";
 
-			})
-			
-		function exibirMensagem() {
-			var msg = mensagem;
-			if(msg != "")
-			alert(msg); }
-
-			
+			if (exameRowid == "") {
+				$("#form-exame").attr("action", "/avaliacao/novoExames.action");
+				$("title").text("<s:text name='label.titulo.pagina.cadastro' />");
+				$(".card-title").text("Novo Exame");
+			} else {
+				$("#form-exame").attr('action', '/avaliacao/alterarExames.action');
+				$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
+				$(".card-title").text("Editar Exame");
+			}
+		})
 		</script>
-		
+
 	</body>
 </html>

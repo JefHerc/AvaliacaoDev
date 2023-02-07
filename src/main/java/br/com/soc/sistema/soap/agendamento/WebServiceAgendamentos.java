@@ -1,7 +1,5 @@
 package br.com.soc.sistema.soap.agendamento;
 
-import java.time.LocalDate;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;

@@ -21,18 +21,18 @@
 								<strong><s:text name="label.buscar.por"/></strong>
 							</span>	
 								<s:select  
- 									cssClass="form-select"  
- 									name="filtrar.opcoesCombo"  
- 									list="listaOpcoesCombo"   
- 									headerKey=""   
- 									headerValue="Escolha..."  
- 									listKey="%{codigo}"  
- 									listValueKey="%{descricao}" 
- 									value="filtrar.opcoesCombo.codigo"									 
+									cssClass="form-select" 
+									name="filtrar.opcoesCombo" 
+									list="listaOpcoesCombo"  
+									headerKey=""  
+									headerValue="Escolha..." 
+									listKey="%{codigo}" 
+									listValueKey="%{descricao}"
+									value="filtrar.opcoesCombo.codigo"									
  								/> 
 								
- 								<s:textfield cssClass="form-control" id="nome" name="filtrar.valorBusca"/> 
- 								<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button> 
+								<s:textfield type="text" cssClass="form-control" id="valor-busca" name="filtrar.valorBusca"/>
+								<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button>
 						</div>
 					</s:form>			
 				</div>				
@@ -125,21 +125,18 @@
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript" src="javaScript/jquery.js"></script>
+		<script src="javaScript/jquery.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+		<script src="javaScript/main.js"></script>
 		<script type="text/javascript">
-		//FUNÇÃO PARA PEGAR O ID DO AGENDAMENTO A SER EXCLUIDO E PASSAR PARA O MODAL
-		$('#confirmarExclusao').on('show.bs.modal', function (event) {
-			  var button = $(event.relatedTarget) // Button that triggered the modal
-			  var agendamentoId = button.data('id') // Extract info from data-* attributes
-			  // Pass the dataId to the Struts action
-			  $('#excluir').attr("href", agendamentoId);
-			});
-		
-		function exibirMensagem() {
-			var msg = mensagem;
-			if(msg != "")
-			alert(msg); }
-
+		$('#filtrarAgendamentos_filtrar_opcoesCombo').on('change', function(){
+			if(this.value == '4') {
+				$('#valor-busca').mask("00/00/0000", {placeholder: "__/__/____"});
+			} else {
+				$('#valor-busca').unmask();
+			}
+		})
 		</script>
 	</body>
 </html>

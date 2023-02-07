@@ -3,9 +3,7 @@ package br.com.soc.sistema.action.agendamento;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
@@ -19,7 +17,6 @@ import br.com.soc.sistema.infra.OpcoesComboBuscarAgendamentos;
 import br.com.soc.sistema.vo.AgendamentoVo;
 import br.com.soc.sistema.vo.ExameVo;
 import br.com.soc.sistema.vo.FuncionarioVo;
-import br.com.soc.sistema.vo.LoginVo;
 
 public class AgendamentoAction extends Action {
 
@@ -89,7 +86,14 @@ public class AgendamentoAction extends Action {
 		if(!isUserAutenticado())
 			return "loginError";
 		
-		business.alterarAgendamento(agendamentoVo);
+		try {
+			business.alterarAgendamento(agendamentoVo);
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+			carregarListas();
+			return INPUT;
+		}
 		return REDIRECT;
 	}
 

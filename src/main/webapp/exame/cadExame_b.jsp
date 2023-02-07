@@ -120,22 +120,7 @@
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-		<script type="text/javascript" src="javaScript/jquery.js"></script>
-		<script type="text/javascript">
-		//FUNÇÃO PARA PEGAR O ID DO EXAME A SER EXCLUIDO E PASSAR PARA O MODAL
-		$('#confirmarExclusao').on('show.bs.modal', function (event) {
-				console.log("entrou")
-			  var button = $(event.relatedTarget) // Button that triggered the modal
-			  var exameId = button.data('id') // Extract info from data-* attributes
-			  // Pass the dataId to the Struts action
-			  $('#excluir').attr("href", exameId);
-			});
-
-		function exibirMensagem() {
-			var msg = mensagem;
-			if(msg != "")
-			alert(msg); }
-
-		</script>
+		<script src="javaScript/jquery.js"></script>
+		<script src="javaScript/main.js"></script>
 	</body>
 </html>

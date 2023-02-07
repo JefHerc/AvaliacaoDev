@@ -43,7 +43,7 @@ public class ExameBusiness {
 
 		switch (filter.getOpcoesCombo()) {
 		case ID:
-			buscarExamePorId(filter.getValorBusca());
+			exames.add(buscarExamePorId(filter.getValorBusca()));
 			break;
 
 		case NOME:

@@ -48,8 +48,8 @@ public class ExameDao extends Dao {
 	}
 
 	public List<ExameVo> findAllByNome(String nome) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ORDER BY nm_exame")
-				.append("WHERE lower(nm_exame) like lower(?)");
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ")
+				.append("WHERE lower(nm_exame) like lower(?) ORDER BY nm_exame");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
 
@@ -76,7 +76,7 @@ public class ExameDao extends Dao {
 	}
 
 	public ExameVo findByCodigo(Integer codigo) {
-		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame")
+		StringBuilder query = new StringBuilder("SELECT rowid id, nm_exame nome FROM exame ")
 				.append("WHERE rowid = ?");
 
 		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
