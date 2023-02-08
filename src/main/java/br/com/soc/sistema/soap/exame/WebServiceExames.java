@@ -5,16 +5,14 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.jws.soap.SOAPBinding.Style;
-import javax.jws.soap.SOAPBinding.Use;
 
 import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.lista.ListaExames;
 import br.com.soc.sistema.vo.ExameVo;
 
 @WebService
-@SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, parameterStyle = ParameterStyle.WRAPPED)
+@SOAPBinding(style = Style.RPC)
 public interface WebServiceExames {
 	
 	@WebMethod (operationName = "TodosExames")

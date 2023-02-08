@@ -50,11 +50,11 @@ public class AgendamentoBusiness {
 		try {
 			agendamentos = dao.findAllByFuncionario(nome);
 		} catch (NumberFormatException e) {
-			throw new BusinessException("Falha ao localizar o exame");
+			throw new BusinessException("Falha ao localizar o funcionário");
 		}
 
 		if (agendamentos.isEmpty())
-			throw new BusinessException("Nenhum exame localizado com este nome");
+			throw new BusinessException("Nenhum funcionário localizado com este nome");
 
 		return agendamentos;
 

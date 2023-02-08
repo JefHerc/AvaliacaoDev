@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title><s:text name="label.titulo.pagina.consulta" /></title>
+		<title><s:text name="label.titulo.pagina.login"></s:text></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">
@@ -16,19 +16,13 @@
 				</div>
 				<div class="card-body">
 					<s:form action="loginAplicacao">
-						<div class="row mb-3">
-							<label for="user" class="col-sm-4 col-form-label">Usuário:</label>
-							<div class="col-sm-8">
-								<s:textfield cssClass="form-control" id="user" name="login.user" />
-							</div>
+						<div class="row mb-3 mx-auto">
+							<s:textfield cssClass="form-control" id="user" name="login.user" placeholder="Usuário" />
 						</div>
-						<div class="row mb-3">
-							<label for="password" class="col-sm-4 col-form-label">Senha:</label>
-							<div class="col-sm-8">
-								<s:password cssClass="form-control" id="password" name="login.password" />
-							</div>
+						<div class="row mb-3 mx-auto">
+							<s:password cssClass="form-control" id="password" name="login.password" placeholder="Senha"/>
 						</div>
-						<button class="btn btn-primary" type="submit">Entrar</button>
+						<button class="btn btn-primary" type="submit"><s:text name="label.corpo.pagina.entrar"></s:text></button>
 					</s:form>
 				</div>
 			</div>

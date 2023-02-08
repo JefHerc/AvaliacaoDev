@@ -11,7 +11,6 @@ import br.com.soc.sistema.vo.AgendamentoVo;
 
 public class RelAgendamentoBusiness {
 
-	private static final String FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO = "Foi informado um caracter no lugar de um numero";
 	private AgendamentoDao dao;
 
 	public RelAgendamentoBusiness() {

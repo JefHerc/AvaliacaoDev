@@ -62,15 +62,15 @@
 										<s:param name="agendamentoVo.rowid" value="rowid"></s:param>
 									</s:url>
 
-									<a href="${editar}" class="btn btn-warning text-white">
-										<s:text name="label.editar"/>
+									<a href="${editar}" class="btn">
+										<img width="40px" alt="editar" src="imagens/editar.png">
 									</a>
 									<s:url action="deletarAgendamentos" var="deletar">
 										<s:param name="agendamentoVo.rowid" value="rowid"></s:param>
 									</s:url>				
 																			
-									<a href="#" data-id="${deletar}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao">
-										<s:text name="label.excluir"/>
+									<a href="#" data-id="${deletar}" class="btn" data-bs-toggle="modal" data-bs-target="#confirmarExclusao">
+										<img width="40px" alt="deletar" src="imagens/deletar.png">
 									</a>
 								</td>
 							</tr>
@@ -82,8 +82,8 @@
 							<td colspan="5">
 								<s:url action="novoAgendamentos" var="novo"/>
 								
-								<a href="${novo}" class="btn btn-success">
-									<s:text name="label.novo"/>
+								<a href="${novo}" class="btn">
+									<img width="40px" alt="mais" src="imagens/mais.png">
 								</a>
 							</td>
 						</tr>

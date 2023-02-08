@@ -21,10 +21,10 @@
 						<div class="row">
 							<div class="col-sm-5">
 								<s:url action="todosAgendamentos" var="todos"/>
-								<a href="${todos}" class="btn btn-success" >Agendamentos</a>
+								<a href="${todos}" class="btn" ><img width="40px" alt="voltar" src="imagens/voltar.png"></a>
 							</div>
 							
-							<div class="col-sm">
+							<div class="d-flex align-items-center col-sm">
 								<h5 class="card-title"></h5>
 							</div>
 						</div>
@@ -88,8 +88,8 @@
 
 					<div class="card-footer mt-3">
 						<div class="form-row">
-							<button class="btn btn-primary col-sm-4 offset-sm-1">Salvar</button>
-							<button id="btn-limpar" type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formulario</button>
+							<button class="btn col-sm-1"><img width="40px" alt="salvar" src="imagens/salvar.png"></button>
+							<button id="btn-limpar" type="reset" class="btn col-sm-1"><img width="40px" alt="limpar" src="imagens/limpar.png"></button>
 						</div>
 					</div>
 				</div>

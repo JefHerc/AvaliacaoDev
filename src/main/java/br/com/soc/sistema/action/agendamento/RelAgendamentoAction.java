@@ -27,6 +27,9 @@ public class RelAgendamentoAction extends Action {
 	private InputStream fileInputStream;
 
 	public String direcionar() {
+		if(!isUserAutenticado())
+			return "loginError";
+
 		return SUCCESS;
 	}
 
@@ -45,7 +48,6 @@ public class RelAgendamentoAction extends Action {
 			fileInputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "downloadXls";

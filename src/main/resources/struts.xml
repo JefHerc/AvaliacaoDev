@@ -32,7 +32,7 @@
 		</action>
 		<action name="*Relatorios" class="br.com.soc.sistema.action.agendamento.RelAgendamentoAction" method="{1}">
 			<result name="success">/agendamento/cadRelAgendamento_b.jsp</result>
-			<result name="redirect" type="redirectAction">direcinarRelatorios</result>
+			<result name="redirect" type="redirectAction">direcionarRelatorios</result>
 			<result name="downloadXls" type="stream">
 				<param name="contentType">application/vnd.ms-excel</param>
 				<param name="inputName">fileInputStream</param>
