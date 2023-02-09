@@ -20,7 +20,6 @@ public class FuncionarioAction extends Action{
 	private FuncionarioBusiness business = new FuncionarioBusiness();
 	private FuncionarioFilter filtrar = new FuncionarioFilter();
 	private FuncionarioVo funcionarioVo = new FuncionarioVo();
-	public String mensagemErro;
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
@@ -133,18 +132,4 @@ public class FuncionarioAction extends Action{
 	public void setFuncionarioVo(FuncionarioVo FuncionarioVo) {
 		this.funcionarioVo = FuncionarioVo;
 	}
-	
-	public String getMensagemErro() {
-		return mensagemErro;
-	}
-
-	public void setMensagemErro(String mensagemErro) {
-		this.mensagemErro = mensagemErro;
-	}
-	
-	private void exibirMensagemErro(String mensagemErro) {
-		setMensagemErro(mensagemErro);
-		session.setAttribute("mensagem", getMensagemErro());
-	}
-
 }

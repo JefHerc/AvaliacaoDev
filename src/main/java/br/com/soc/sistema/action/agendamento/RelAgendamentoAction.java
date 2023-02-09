@@ -1,7 +1,6 @@
 package br.com.soc.sistema.action.agendamento;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 import br.com.soc.sistema.business.RelAgendamentoBusiness;
 import br.com.soc.sistema.infra.Action;
 import br.com.soc.sistema.vo.AgendamentoVo;
+import br.com.soc.sistema.vo.IndicadorExameVo;
 
 @Conversion
 public class RelAgendamentoAction extends Action {
@@ -25,37 +25,43 @@ public class RelAgendamentoAction extends Action {
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
 	private InputStream fileInputStream;
+	private List<IndicadorExameVo> indicadores = new ArrayList<>();
 
 	public String direcionar() {
-		if(!isUserAutenticado())
+		if (!isUserAutenticado())
 			return "loginError";
 
 		return SUCCESS;
 	}
 
 	public String xls() {
-		if(!isUserAutenticado())
+		if (!isUserAutenticado())
 			return "loginError";
 
 		try {
 			HSSFWorkbook workbook = business.gerarXls(dataInicio, dataFim);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			try {
-				workbook.write(outputStream);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			workbook.write(outputStream);
 			fileInputStream = new ByteArrayInputStream(outputStream.toByteArray());
-
-		} catch (IOException e) {
+			workbook.close();
+			
+			return "downloadXls";
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
 			e.printStackTrace();
 		}
-		return "downloadXls";
+
+		return INPUT;
 	}
 
 	public String indicador() {
-		agendamentos = business.gerarRelatoriEmTela(dataInicio, dataFim);
-		return "redirect";
+		try {
+			indicadores.addAll(business.gerarRelatoriEmTela(dataInicio, dataFim));
+		} catch (Exception e) {
+			exibirMensagemErro(e.getMessage());
+			e.printStackTrace();
+		}
+		return "indicador";
 	}
 
 	public List<AgendamentoVo> getAgendamentos() {
@@ -85,9 +91,17 @@ public class RelAgendamentoAction extends Action {
 	public void setDataFim(LocalDate dataFim) {
 		this.dataFim = dataFim;
 	}
-		
+
 	public InputStream getFileInputStream() {
 		return fileInputStream;
+	}
+
+	public List<IndicadorExameVo> getIndicadores() {
+		return indicadores;
+	}
+
+	public void setIndicadores(List<IndicadorExameVo> indicadores) {
+		this.indicadores = indicadores;
 	}
 
 }

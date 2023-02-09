@@ -33,7 +33,7 @@
 					<div class="card-body">
 						<div class="row align-items-center">
 							<label for="id" class="col-sm-1 col-form-label text-center">
-								C�digo:
+								<s:text name="label.id"></s:text>
 							</label>	
 
 							<div class="col-sm-2">
@@ -43,7 +43,7 @@
 						
 						<div class="row align-items-center mt-3">
 							<label for="nome" class="col-sm-1 col-form-label text-center">
-								Nome:
+								<s:text name="label.nome"></s:text>
 							</label>	
 
 							<div class="col-sm-5">
@@ -70,11 +70,11 @@
 			var funcionarioRowid = "<s:property value ='funcionarioVo.rowid' />";
 			if (funcionarioRowid === "") {
 				$("#form-funcionario").attr("action", "/avaliacao/novoFuncionarios.action");
-				$("title").text("<s:text name='label.titulo.pagina.cadastro' />");
+				$("title").text("<s:text name='label.titulo.pagina.funcionario.cadastro' />");
 				$(".card-title").text("Novo Funcionario");
 			} else {
 				$("#form-funcionario").attr('action', '/avaliacao/alterarFuncionarios.action');
-				$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
+				$("title").text("<s:text name='label.titulo.pagina.funcionario.alteracao' />");
 				$(".card-title").text("Editar Funcionario");
 			}
 		})

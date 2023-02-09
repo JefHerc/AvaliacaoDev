@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title><s:text name="label.titulo.pagina.login"/></title>
+		<title><s:text name="label.titulo.pagina.funcionario.consulta"/></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary" onload="exibirMensagem()">	
@@ -104,7 +104,7 @@
 		      </div>
 		      
 		      <div class="modal-body">
-		      	<span><s:text name="label.modal.corpo"/></span>
+		      	<span><s:text name="label.modal.corpo.pagina.funcionario"/></span>
 		      </div>
 		      
 		      <div class="modal-footer">

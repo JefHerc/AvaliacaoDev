@@ -19,7 +19,6 @@ public class ExameAction extends Action {
 	private ExameBusiness business = new ExameBusiness();
 	private ExameFilter filtrar = new ExameFilter();
 	private ExameVo exameVo = new ExameVo();
-	public String mensagemErro;
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
@@ -140,16 +139,4 @@ public class ExameAction extends Action {
 		this.exameVo = exameVo;
 	}
 
-	public String getMensagemErro() {
-		return mensagemErro;
-	}
-
-	public void setMensagemErro(String mensagemErro) {
-		this.mensagemErro = mensagemErro;
-	}
-	
-	private void exibirMensagemErro(String mensagemErro) {
-		setMensagemErro(mensagemErro);
-		session.setAttribute("mensagem", getMensagemErro());
-	}
 }

@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title><s:text name="label.titulo.pagina.agendamento.consulta"></s:text></title>
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
     </head>
 	<body class="bg-secondary" onload="exibirMensagem()">
@@ -33,7 +33,7 @@
 					<div class="card-body">
 						<div class="row align-items-center">
 							<label for="id" class="col-sm-2 col-form-label text-center">
-								Código:
+								<s:text name="label.id"></s:text>
 							</label>	
 
 							<div class="col-sm-2">
@@ -43,7 +43,7 @@
 						
 						<div class="row align-items-center mt-3">
 							<label for="funcionario" class="col-sm-2 col-form-label text-center">
-								Funcionário:
+								<s:text name="label.funcionario"></s:text>
 							</label>	
 
 							<div class="col-sm-4">
@@ -61,7 +61,7 @@
 						</div>
 						<div class="row align-items-center mt-3">
 							<label for="exame" class="col-sm-2 col-form-label text-center">
-								Exame:
+								<s:text name="label.exame"></s:text>
 							</label>	
 
 							<div class="col-sm-4">
@@ -77,7 +77,7 @@
 						</div>
 						<div class="row align-items-center mt-3">
 							<label for="data-agendamento" class="col-sm-2 col-form-label text-center">
-								Data:
+								<s:text name="label.data"></s:text>
 							</label>	
 
 							<div class="col-sm-2">
@@ -108,11 +108,11 @@
 			var agendamentoRowid = "<s:property value ='agendamentoVo.rowid' />";
 			if (agendamentoRowid == "") {
 				$("#form-agendamento").attr("action", "/avaliacao/novoAgendamentos.action");
-				$("title").text("<s:text name='label.titulo.pagina.cadastro' />");
+				$("title").text("<s:text name='label.titulo.pagina.agendamento.cadastro' />");
 				$(".card-title").text("Novo Agendamento");
 			} else {
 				$("#form-agendamento").attr('action', '/avaliacao/alterarAgendamentos.action');
-				$("title").text("<s:text name='label.titulo.pagina.alteracao' />");
+				$("title").text("<s:text name='label.titulo.pagina.agendamento.alteracao' />");
 				$(".card-title").text("Editar Agendamento");
 			}
 		})

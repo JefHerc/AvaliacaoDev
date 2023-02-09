@@ -26,6 +26,7 @@ public class LoginAction extends Action implements SessionAware {
 			session.put("userLogado", loginVo);
 			return SUCCESS;
 		} else {
+			exibirMensagemErro("Login inválido");
 			return "login";
 		}
 	}

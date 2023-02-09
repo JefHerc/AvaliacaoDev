@@ -13,6 +13,7 @@ import br.com.soc.sistema.dao.Dao;
 import br.com.soc.sistema.vo.AgendamentoVo;
 import br.com.soc.sistema.vo.ExameVo;
 import br.com.soc.sistema.vo.FuncionarioVo;
+import br.com.soc.sistema.vo.IndicadorExameVo;
 
 public class AgendamentoDao extends Dao {
 
@@ -279,5 +280,36 @@ public class AgendamentoDao extends Dao {
 		vo.setExame(new ExameVo(rs.getString("cd_exame"), rs.getString("nm_exame")));
 		vo.setDataAgendamento(rs.getObject("data_agendamento", LocalDate.class));
 		return vo;
+	}
+
+	public List<IndicadorExameVo> indicadorByRangeData(LocalDate dataInicio, LocalDate dataFim) {
+		StringBuilder query = new StringBuilder("SELECT age.cd_exame, exa.nm_exame, COUNT(age.cd_exame) as total ")
+				.append("FROM agendamento age ")
+				.append("JOIN exame exa ON age.cd_exame = exa.rowid ")
+				.append("WHERE (data_agendamento >= ? AND data_agendamento <= ?) ")
+				.append("GROUP BY age.cd_exame ")
+				.append("ORDER BY total DESC ")
+				.append("LIMIT 5;");
+
+		try (Connection con = getConexao(); PreparedStatement ps = con.prepareStatement(query.toString())) {
+
+			ps.setObject(1, dataInicio);
+			ps.setObject(2, dataFim);
+			try (ResultSet rs = ps.executeQuery()) {
+				IndicadorExameVo vo = null;
+				List<IndicadorExameVo> agendamentos = new ArrayList<>();
+				while (rs.next()) {
+					vo = new IndicadorExameVo();
+					vo.setRowid(rs.getInt("cd_exame"));
+					vo.setNomeExame(rs.getString("nm_exame"));
+					vo.setQtdExame(rs.getString("total"));
+					agendamentos.add(vo);
+				}
+				return agendamentos;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Collections.emptyList();
 	}
 }

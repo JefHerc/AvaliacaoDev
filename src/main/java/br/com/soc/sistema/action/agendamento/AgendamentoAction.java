@@ -28,7 +28,6 @@ public class AgendamentoAction extends Action {
 	private List<ExameVo> exames = new ArrayList<>();
 	private AgendamentoVo agendamentoVo = new AgendamentoVo();
 	private AgendamentoFilter filtrar = new AgendamentoFilter();
-	public String mensagemErro;
 	private HttpSession session = ServletActionContext.getRequest().getSession();
 
 	public String todos() {
@@ -188,16 +187,4 @@ public class AgendamentoAction extends Action {
 		this.agendamentoVo = agendamentoVo;
 	}
 
-	public String getMensagemErro() {
-		return mensagemErro;
-	}
-
-	public void setMensagemErro(String mensagemErro) {
-		this.mensagemErro = mensagemErro;
-	}
-
-	private void exibirMensagemErro(String mensagemErro) {
-		setMensagemErro(mensagemErro);
-		session.setAttribute("mensagem", getMensagemErro());
-	}
 }
