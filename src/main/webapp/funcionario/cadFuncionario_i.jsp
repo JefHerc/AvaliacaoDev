@@ -55,7 +55,7 @@
 					<div class="card-footer">
 						<div class="form-row">
 							<button class="btn col-sm-1"><img width="40px" alt="salvar" src="imagens/salvar.png"></button>
-							<button id="btn-limpar" type="reset" class="btn col-sm-1"><img width="40px" alt="limpar" src="imagens/limpar.png"></button>
+							<button id="btn-limpar" type="button" onclick="limpar()" class="btn col-sm-1"><img width="40px" alt="limpar" src="imagens/limpar.png"></button>
 						</div>
 					</div>
 				</div>

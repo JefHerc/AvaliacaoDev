@@ -24,8 +24,6 @@ public class AgendamentoBusiness {
 	}
 
 	public String salvarAgendamento(AgendamentoVo agendamentoVo) {
-//		if (exameVo.getNome().isEmpty())
-//		throw new IllegalArgumentException("Nome nao pode ser em branco");
 		validarAgendamento(agendamentoVo);
 		try {
 			dao.insertAgendamento(agendamentoVo);
@@ -117,11 +115,13 @@ public class AgendamentoBusiness {
 		return agendamentos;
 	}
 
-	private void validarAgendamento(AgendamentoVo agendamentoVo) {
-		boolean isAgendado = dao.isAgendado(agendamentoVo);
+	private void validarAgendamento(AgendamentoVo vo) {
+		if (vo.getDataAgendamento() == null || vo.getExame().getRowid().isEmpty() || vo.getFuncionario().getRowid().isEmpty())
+			throw new BusinessException("Preencha todos os campos.");
+
+		boolean isAgendado = dao.isAgendado(vo);
 		if (isAgendado)
-			throw new BusinessException(
-					"Já existe um agendamento registrado para este Funcionário com este exame nesta data.");
+			throw new BusinessException("Já existe um agendamento registrado para este Funcionário com este exame nesta data.");
 	}
 
 	private LocalDate convertStringToLocalDate(String data) {
@@ -131,7 +131,12 @@ public class AgendamentoBusiness {
 		} else {
 			formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		}
-		LocalDate localDate = LocalDate.parse(data, formatter);
+		LocalDate localDate;
+		try {
+			localDate = LocalDate.parse(data, formatter);
+		} catch (Exception e) {
+			throw new BusinessException("Data inválida.");
+		}
 		return localDate;
 	}
 }

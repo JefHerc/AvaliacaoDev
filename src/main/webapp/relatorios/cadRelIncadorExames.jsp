@@ -38,8 +38,13 @@
 					</s:iterator>
 				</tbody>
 			</table>
+			<div id="noResult" hidden="true">
+				<img class="rounded mx-auto d-block img-thumbnail mt-3" id="noResult" class="center" alt="Sem-resultados" src="imagens/noResult.jpg">
+			</div>
 		</div>
-	
+		
+		<script src="javaScript/jquery.js"></script>
+		<script src="javaScript/cadRelIncadorExames.js"></script>
 	</body>
 
 </html>

@@ -48,7 +48,7 @@
 
 							<div class="col-sm-4">
 								
-								<s:select  
+								<s:select id="select-funcionarios"
  									cssClass="form-select"  
 									name="agendamentoVo.funcionario.rowid"  
 									list="funcionarios"   
@@ -65,7 +65,7 @@
 							</label>	
 
 							<div class="col-sm-4">
-								<s:select  
+								<s:select  id="select-exames"
  									cssClass="form-select"  
 									name="agendamentoVo.exame.rowid"  
 									list="exames"   
@@ -89,7 +89,7 @@
 					<div class="card-footer mt-3">
 						<div class="form-row">
 							<button class="btn col-sm-1"><img width="40px" alt="salvar" src="imagens/salvar.png"></button>
-							<button id="btn-limpar" type="reset" class="btn col-sm-1"><img width="40px" alt="limpar" src="imagens/limpar.png"></button>
+							<button id="btn-limpar" onclick="limpar()" type="button" class="btn col-sm-1"><img width="40px" alt="limpar" src="imagens/limpar.png"></button>
 						</div>
 					</div>
 				</div>
@@ -116,6 +116,14 @@
 				$(".card-title").text("Editar Agendamento");
 			}
 		})
+		function limpar(){
+			$('#data-agendada').val('');
+			let exame = document.querySelector("#select-funcionarios");
+			exame.selectedIndex = -1;
+			
+			let func = 	document.querySelector("#select-exames");
+			func.selectedIndex = -1;
+		}
 		</script>
 	</body>
 </html>

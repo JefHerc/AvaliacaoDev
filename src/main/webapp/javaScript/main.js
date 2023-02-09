@@ -9,3 +9,7 @@ function exibirMensagem() {
 	if (msg != "")
 		alert(msg);
 }
+
+function limpar(){
+	$("#nome").val("");
+}
